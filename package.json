@@ -1,0 +1,44 @@
+{
+  "name": "cardsity-vue-client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "register-service-worker": "^1.7.1",
+    "vanilla-tilt": "^1.7.0",
+    "vue": "^2.6.11",
+    "vue-router": "^3.3.2",
+    "vue-toasted": "^1.1.28",
+    "vuelidate": "^0.7.5",
+    "vuetify": "^2.2.30",
+    "vuex": "^3.4.0",
+    "websocket-as-promised": "^1.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.3.0",
+    "@vue/cli-plugin-eslint": "~4.3.0",
+    "@vue/cli-plugin-pwa": "~4.4.0",
+    "@vue/cli-plugin-router": "~4.3.0",
+    "@vue/cli-plugin-vuex": "~4.3.0",
+    "@vue/cli-service": "~4.3.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-vue": "^6.2.2",
+    "eslint-plugin-vuetify": "^1.0.0-beta.6",
+    "material-design-icons-iconfont": "^5.0.1",
+    "node-sass": "^4.14.1",
+    "prettier": "^1.19.1",
+    "sass": "^1.26.7",
+    "sass-loader": "^8.0.2",
+    "vue-cli-plugin-vuetify": "~2.0.5",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.4.4"
+  }
+}
