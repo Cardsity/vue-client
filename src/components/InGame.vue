@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-row no-gutters align="start" justify="start" class="ml-3 mt-3">
+        <v-row no-gutters align="start" justify="start" class="ml-3 mt-3" style="position:relative;">
             <!-- Black card -->
             <Card :black="true" :card="lobby.blackCard" :disabled="true"></Card>
             <v-divider vertical class="ml-1"></v-divider>
@@ -9,11 +9,18 @@
             <Card
                 :disabled="!$store.state.isCzar || !playedCard.text || $store.state.czarPicked"
                 v-for="(playedCard, index) in $store.state.cards"
+                :space-right="lobby.blackCard.blanks > 1 && (index + 1) % lobby.blackCard.blanks === 0"
                 :key="index"
                 :card="playedCard"
             ></Card>
+            <!-- Add spacer when card owner changes -->
+            <!--<v-divider
+                    vertical
+                    class="ml-1"
+                    v-if="lobby.blackCard.blanks > 1 && index % lobby.blackCard.blanks !== 0"
+            ></v-divider>-->
             <v-spacer></v-spacer>
-            <div class="mr-2">
+            <div class="mr-2" style="height: inherit;">
                 <v-progress-circular
                     :value="(lobby.currentRound / lobby.maxRounds) * 100"
                     size="50"
@@ -26,26 +33,8 @@
                     {{ timeString }}
                 </v-progress-circular>
             </div>
-        </v-row>
-        <v-divider></v-divider>
-        <v-row no-gutters align="start" justify="start" class="cards-view ml-3">
-            <PlayerList :lobby="lobby"></PlayerList>
-            <v-divider vertical class="ml-4 mr-4"></v-divider>
-
-            <div class="czar-overlay" v-if="$store.state.isCzar">You are the Card Czar this round!</div>
-            <!-- Player's hand -->
-            <Card
-                :black="false"
-                v-for="(playerCard, index) in $store.state.playerCards"
-                :card="playerCard"
-                :key="index"
-                :disabled="$store.state.sentCards"
-                :blanks="lobby.blackCard.blanks"
-                class="mt-3 mb-3"
-            ></Card>
-
-            <v-spacer></v-spacer>
             <v-btn
+                style="position: absolute; bottom: 0; right: 0; margin: 0.5rem;"
                 @click="submitCards"
                 :disabled="
                     $store.state.sentCards ||
@@ -56,9 +45,36 @@
                 <v-icon>send</v-icon>
                 Submit selected cards
             </v-btn>
+        </v-row>
+        <v-divider></v-divider>
+        <v-row no-gutters align="start" justify="start" class="cards-view">
+            <div>
+                <PlayerList :lobby="lobby"></PlayerList>
+                <Chat></Chat>
+            </div>
+            <v-divider vertical></v-divider>
 
-            <v-spacer></v-spacer>
-            <Chat></Chat>
+            <!-- Player's hand -->
+            <v-col style="position: relative;">
+                <div class="czar-overlay" v-if="$store.state.isCzar">
+                    You are the Card Czar this round!
+                </div>
+                <v-container fluid class="ml-2">
+                    <v-row no-gutters align="start" justify="start">
+                        <Card
+                            :black="false"
+                            v-for="(playerCard, index) in $store.state.playerCards"
+                            :card="playerCard"
+                            :key="index"
+                            :disabled="$store.state.sentCards"
+                            :blanks="lobby.blackCard.blanks"
+                            class="mt-3 mb-3"
+                        ></Card>
+                    </v-row>
+                </v-container>
+            </v-col>
+
+            <!--<v-spacer></v-spacer>-->
         </v-row>
     </div>
 </template>
@@ -112,7 +128,7 @@
                 const webSocket = this.$store.state.connection;
 
                 const cardPlayRequest = {
-                    playedCards: this.$store.state.playerCards.filter(x => x.selected),
+                    playedCards: this.$store.getters.selectedPlayerCards,
                 };
                 console.log('Sending', cardPlayRequest);
 
@@ -157,10 +173,13 @@
         color: rgba(255, 255, 255, 0.9);
         font-size: 24pt;
         font-weight: bold;
+        top: 0;
+        left: 0;
         height: 100%;
         width: 100%;
         z-index: 100;
 
+        text-shadow: 0 0 15px rgba(0, 0, 0, 0.57);
         display: flex;
         justify-content: center;
         align-items: center;

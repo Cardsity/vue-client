@@ -34,6 +34,6 @@ docker run -it -p 8080:8080 --rm --name cardsity-vue-client cardsity-vue-client
 
 ### TODO
 - Option to preview the black cards filled with the text of the selected white cards
-- <https://vuetifyjs.com/en/components/expansion-panels/> for game manual
-- <https://vuetifyjs.com/en/components/chip-groups/> for official decks
-- Highlight czar in player list
+- Joker Cards
+- <https://vuetifyjs.com/en/components/expansion-panels/> for game manual?
+- <https://vuetifyjs.com/en/components/chip-groups/> for official decks?

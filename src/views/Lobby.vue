@@ -95,17 +95,8 @@
                     }
                     if (winnerID) {
                         this.$store.state.timer = 15 * 1000;
-                        const wonCard = this.$store.state.cards.find(x => x.owner === winnerID);
                         this.$store.state.czarPicked = winnerID;
-                        const wonCards = this.$store.state.cards.filter(x => x.owner === winnerID);
-                        if (wonCards) {
-                            wonCards.forEach(wonCard => {
-                                // This must be used to add new properties to reactive objects, as Vue cannot detect normal property additions
-                                this.$set(wonCard, 'selected', true);
-                            });
-                        } else {
-                            console.error(`(Lobby) wonCard ${wonCard} not found in store cards`);
-                        }
+                        this.$store.dispatch('selectWonCards', winnerID);
                     }
                     if (gameWinner) {
                         // TODO

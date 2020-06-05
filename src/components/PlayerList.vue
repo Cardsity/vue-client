@@ -6,8 +6,8 @@
                 <v-list-item-title :style="`color: ${player.color};`">
                     <v-icon :color="player.color">account_circle</v-icon>
                     {{ player.name }}
-                    <v-chip color="primary" v-if="player.info.isCzar" class="mr-1">Czar</v-chip>
                     <v-chip color="secondary" class="mr-1">{{ player.info.points }} Points</v-chip>
+                    <v-chip color="primary" v-if="player.info.isCzar" class="mr-1">Czar</v-chip>
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn

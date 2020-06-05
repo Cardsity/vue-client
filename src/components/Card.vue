@@ -7,13 +7,15 @@
             'cah-card-white': !black,
             disabled: disabled,
             selected: card.selected,
+            'mr-7': spaceRight,
         }"
         @click="clickCard"
     >
         <span class="cah-card-text">{{ text }}</span>
         <span class="cah-question" v-if="!text">?</span>
         <img class="cah-card-image" alt="Card logo" src="../assets/card-logo.png" />
-        <span class="cah-card-number">{{ alt }}</span>
+        <!-- Only show the number when the selected and blanks is bigger than one (this also prevents showing it on the czar picked cards) -->
+        <span class="cah-card-number" v-if="card.selected && blanks > 1">{{ card.selected }}</span>
     </v-card>
 </template>
 
@@ -22,12 +24,7 @@
 
     export default {
         name: 'Card',
-        props: ['card', 'black', 'disabled', 'blanks'],
-        data() {
-            return {
-                alt: '1',
-            };
-        },
+        props: ['card', 'black', 'disabled', 'blanks', 'spaceRight'],
         computed: {
             // for easier access
             text() {
@@ -39,30 +36,42 @@
                 if (!this.disabled) {
                     // If blanks were passed this is a playerCard
                     if (this.blanks) {
-                        const playedCardsCount = this.$store.state.playerCards.filter(x => x.selected)
-                            .length;
+                        const { selectedPlayerCards, highestSelectedCard } = this.$store.getters;
+                        const playedCardsCount = selectedPlayerCards.length;
+                        const allCardSelected = playedCardsCount >= this.blanks;
 
-                        if (!this.card.selected) {
-                            if (playedCardsCount < this.blanks) {
-                                // This must be used to add new properties to reactive objects, as Vue cannot detect normal property additions
-                                this.$set(this.card, 'selected', true);
-                            }
-                        } else {
-                            // This must be used to add new properties to reactive objects, as Vue cannot detect normal property additions
-                            this.$set(this.card, 'selected', false);
-                        }
+                        // we need to add one when a new card get's selected, otherwise the highest card get's updated
+                        const index =
+                            (highestSelectedCard ? highestSelectedCard.selected : 0) +
+                            (allCardSelected ? 0 : 1);
 
                         console.log('clicked playerCard', {
                             playerCards: this.$store.state.playerCards,
                             playedCardsCount,
                             blanks: this.blanks,
                             card: this.card,
+                            index,
                         });
+
+                        if (!this.card.selected) {
+                            // if all cards are selected we deselect the highest
+                            if (allCardSelected) {
+                                selectedPlayerCards[selectedPlayerCards.length - 1].selected = 0;
+                            }
+                            // This must be used to add new properties to reactive objects, as Vue cannot detect normal property additions
+                            this.$set(this.card, 'selected', index);
+                        } else {
+                            // This must be used to add new properties to reactive objects, as Vue cannot detect normal property additions
+                            this.$set(this.card, 'selected', 0);
+                            // Fix ordering of others
+                            this.$store.dispatch('fixSelectedCardsIndices');
+                        }
                     } else {
                         const webSocket = this.$store.state.connection;
 
+                        const winnerID = this.card.owner;
                         const czarPickRequest = {
-                            selectedCardOwnerID: this.card.owner,
+                            selectedCardOwnerID: winnerID,
                         };
                         console.log('Sending', czarPickRequest);
 
@@ -71,7 +80,7 @@
 
                             if (response.success) {
                                 // This must be used to add new properties to reactive objects, as Vue cannot detect normal property additions
-                                this.$set(this.card, 'selected', true);
+                                this.$store.dispatch('selectWonCards', winnerID);
                                 this.$store.state.czarPicked = this.card;
                             } else {
                                 console.error(response);
@@ -109,6 +118,7 @@
         position: relative;
         width: 10rem;
         height: 13rem;
+        padding-right: 1rem;
 
         border: 1px solid black;
         border-radius: 5px;
@@ -167,15 +177,18 @@
     }
 
     .cah-card-number {
+        position: absolute;
+        right: 0;
+        bottom: 0;
         border-radius: 50%;
         width: 34px;
         height: 34px;
-        padding: 10px;
         background: #fff;
         border: 3px solid #000;
         color: #000;
         text-align: center;
         font-size: 14pt;
+        margin: 0.2rem;
     }
 
     .cah-card-text {

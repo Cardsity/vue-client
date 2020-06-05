@@ -27,25 +27,21 @@
                 </v-card>
             </div>
         </div>
-        <v-row>
-            <v-col cols="12">
-                <v-form v-on:submit.prevent="sendChat">
-                    <v-text-field
-                        filled
-                        single-line
-                        :counter="64"
-                        dense
-                        append-icon="send"
-                        v-model="chatMessage"
-                        :loading="loading"
-                        :disabled="loading"
-                        @click:append="sendChat"
-                        label="Send a message..."
-                        id="chat-input-field"
-                    ></v-text-field>
-                </v-form>
-            </v-col>
-        </v-row>
+        <v-form v-on:submit.prevent="sendChat">
+            <v-text-field
+                filled
+                single-line
+                :counter="64"
+                dense
+                append-icon="send"
+                v-model="chatMessage"
+                :loading="loading"
+                :disabled="loading"
+                @click:append="sendChat"
+                label="Send a message..."
+                id="chat-input-field"
+            ></v-text-field>
+        </v-form>
     </div>
 </template>
 
@@ -126,7 +122,6 @@
 
 <style scoped lang="scss">
     .chat {
-        max-width: 700px;
         margin: auto;
     }
     .chat-container {
@@ -135,6 +130,21 @@
         height: 250px;
         overflow-y: auto;
         padding: 10px;
+    }
+    .chat-container {
+        --scrollbarBG: transparent;
+        --thumbBG: gray;
+    }
+    .chat-container::-webkit-scrollbar {
+        width: 7px;
+    }
+    .chat-container::-webkit-scrollbar-track {
+        background: var(--scrollbarBG);
+    }
+    .chat-container::-webkit-scrollbar-thumb {
+        background-color: var(--thumbBG);
+        border-radius: 6px;
+        border: 3px solid var(--scrollbarBG);
     }
     .message {
         margin-bottom: 3px;
