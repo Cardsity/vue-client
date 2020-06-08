@@ -1,7 +1,13 @@
 {
   "name": "cardsity-vue-client",
   "version": "0.1.0",
-  "private": true,
+  "description": "Web client for the Cards Against Humanity clone Cardsity",
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/Cardsity",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Cardsity/vue-client.git"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -15,7 +21,7 @@
     "vue-router": "^3.3.2",
     "vue-toasted": "^1.1.28",
     "vuelidate": "^0.7.5",
-    "vuetify": "^2.2.30",
+    "vuetify": "^2.2.32",
     "vuex": "^3.4.0",
     "websocket-as-promised": "^1.0.1"
   },
@@ -35,7 +41,7 @@
     "material-design-icons-iconfont": "^5.0.1",
     "node-sass": "^4.14.1",
     "prettier": "^1.19.1",
-    "sass": "^1.26.7",
+    "sass": "^1.26.8",
     "sass-loader": "^8.0.2",
     "vue-cli-plugin-vuetify": "~2.0.5",
     "vue-template-compiler": "^2.6.11",
