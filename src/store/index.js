@@ -19,6 +19,7 @@ export default new Vuex.Store({
         leaveLobbyDialog: false,
         createDialog: false,
         passwordDialog: false,
+        winnerDialog: false,
         // Lobby join
         joinLoading: false,
         joinedLobby: '',
@@ -29,7 +30,6 @@ export default new Vuex.Store({
         timer: 0,
         playerCards: [],
         sentCards: false,
-        isCzar: false,
         czarPicked: null,
     },
     getters: {
@@ -42,6 +42,9 @@ export default new Vuex.Store({
             return selectedPlayerCards.length > 0
                 ? selectedPlayerCards[selectedPlayerCards.length - 1]
                 : null;
+        },
+        isCzar: state => {
+            return state.loggedIn === state.currentLobby.czar.owner.id;
         },
     },
     mutations: {
@@ -65,9 +68,10 @@ export default new Vuex.Store({
         /**
          * Connect to the websocket server
          *
+         * @param state
          * @param context
          */
-        connect({ commit }) {
+        connect({ state, commit }) {
             console.log('Starting connection to websocket server');
 
             const webSocket = new WebSocketAsPromised('ws://' + SERVER_URL, {
@@ -93,6 +97,10 @@ export default new Vuex.Store({
                 console.log('Websocket connection closed', event);
                 commit('setConnectionClosed', true);
                 commit('setLoggedIn', null);
+                commit('setCurrentLobby', null);
+                // TODO: reset all loading states
+                state.joinLoading = false;
+
                 if (router.currentRoute.path !== '/login') {
                     router.push('/login');
                 }
@@ -148,10 +156,34 @@ export default new Vuex.Store({
                 if (response.success) {
                     console.log('successfully joined');
                     commit('setCurrentLobby', response);
-                    router.push(`/lobby/${item.id}`);
+                    router.push(`/lobby`);
                 } else {
                     console.error(response);
                     Vue.toasted.show(response.message, {
+                        icon: 'error',
+                        duration: 1000,
+                    });
+                }
+            });
+        },
+
+        leaveLobby({ state, commit }) {
+            state.leaveLobbyDialog = false;
+
+            const webSocket = state.connection;
+            const leaveLobbyRequest = {
+                confirmLeave: true,
+            };
+            console.log('Sending', leaveLobbyRequest);
+            webSocket.sendRequest(leaveLobbyRequest).then(response => {
+                console.log('Leave lobby response message received', response);
+
+                if (response.success) {
+                    router.push('/');
+                    commit('setCurrentLobby', null);
+                } else {
+                    console.error(response);
+                    this.$toasted.show(response.message, {
                         icon: 'error',
                         duration: 1000,
                     });
@@ -166,7 +198,7 @@ export default new Vuex.Store({
          * @param winnerID
          */
         selectWonCards({ state }, winnerID) {
-            const wonCards = state.cards.filter(x => x.owner === winnerID);
+            const wonCards = state.cards.filter(x => x.ownerId === winnerID);
             if (wonCards) {
                 wonCards.forEach(wonCard => {
                     // This must be used to add new properties to reactive objects, as Vue cannot detect normal property additions

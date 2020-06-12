@@ -69,9 +69,9 @@
                     } else {
                         const webSocket = this.$store.state.connection;
 
-                        const winnerID = this.card.owner;
+                        const winnerID = this.card.ownerId;
                         const czarPickRequest = {
-                            selectedCardOwnerID: winnerID,
+                            winnerId: winnerID,
                         };
                         console.log('Sending', czarPickRequest);
 

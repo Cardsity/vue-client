@@ -11,9 +11,9 @@ if (!localStorage.getItem('darkTheme')) {
 
 export default new Vuetify({
     icons: {
-        iconfont: 'md',
+        iconfont: 'md', // TODO: maybe switch to mdi?
     },
     theme: {
-        dark: localStorage.getItem('darkTheme') === 'dark', // TODO: detect from os
+        dark: localStorage.getItem('darkTheme') === 'dark',
     },
 });

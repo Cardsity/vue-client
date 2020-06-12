@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div v-if="lobby">
+        <WinnerDialog :winner="gameWinner" :players="players" :card-history="cardHistory"></WinnerDialog>
         <InGame v-if="inGame" :lobby="lobby"></InGame>
         <LobbyInfo v-else :lobby="lobby"></LobbyInfo>
     </div>
@@ -8,10 +9,12 @@
 <script>
     import InGame from '../components/InGame';
     import LobbyInfo from '../components/LobbyInfo';
+    import WinnerDialog from '../components/WinnerDialog';
 
     export default {
         name: 'Lobby',
         components: {
+            WinnerDialog,
             InGame,
             LobbyInfo,
         },
@@ -26,7 +29,15 @@
         data() {
             return {
                 updateLobbyListener: null,
+                gameWinner: null,
+                players: null,
+                cardHistory: null,
             };
+        },
+        beforeMount() {
+            if (!this.$store.state.currentLobby) {
+                this.$router.push('/');
+            }
         },
         mounted() {
             const webSocket = this.$store.state.connection;
@@ -44,18 +55,14 @@
                         players,
                         pickLimit,
                         unrevealedCardOwnerId,
-                        revealedCards,
                         newHand,
-                        isCzar,
-                        winnerID,
-                        gameWinner,
+                        winnerId,
+                        winner,
+                        cardHistory,
                     } = data;
 
                     if (decks) {
                         this.$store.commit('setCurrentLobby', data);
-                    }
-                    if (cards) {
-                        this.$store.state.cards = cards;
                     }
                     if (kickReason || kickReason === '') {
                         this.$toasted.show(
@@ -66,42 +73,55 @@
                             }
                         );
 
+                        this.$store.commit('setCurrentLobby', null);
                         this.$router.push('/lobbyList');
                     }
                     if (currentRound && players) {
-                        if (currentRound > 0) {
+                        // a new round starts if we get a lobby update packet and no cards are selected
+                        if (
+                            currentRound > 0 &&
+                            this.$store.state.cards.filter(x => x.selected).length <= 0
+                        ) {
                             // start timer
                             this.$store.state.timer = pickLimit;
                         }
                     }
                     if (newHand) {
-                        console.log('(Lobby) Update Hand', { newHand, isCzar });
+                        console.log('(Lobby) Update Hand', newHand);
                         // this also resets the selected cards because we replace it
                         this.$store.state.playerCards = newHand;
-                        this.$store.state.isCzar = isCzar;
                         // we can select cards again
                         this.$store.state.sentCards = false;
                         this.$store.state.cards = [];
                     }
                     if (unrevealedCardOwnerId) {
                         this.$store.state.cards.push({ text: '' });
-                        console.log('cards', this.$store.state.cards);
+                        console.log(
+                            '(Lobby) unrevealed cards',
+                            unrevealedCardOwnerId,
+                            this.$store.state.cards
+                        );
                     }
-                    if (revealedCards) {
-                        this.$store.state.cards = revealedCards;
+                    if (cards) {
+                        this.$store.state.cards = cards;
                         // reset timer TODO: circle
                         this.$store.state.timer = this.lobby.pickLimit;
                         this.$store.state.czarPicked = null;
+                        this.$store.state.sentCards = true;
+                        // TODO: select the card which was selected randomly
                     }
-                    if (winnerID) {
-                        this.$store.state.timer = 15 * 1000;
-                        this.$store.state.czarPicked = winnerID;
-                        this.$store.dispatch('selectWonCards', winnerID);
+                    if (winnerId) {
+                        this.$store.state.timer = 10 * 1000;
+                        this.$store.state.czarPicked = winnerId;
+                        this.$store.dispatch('selectWonCards', winnerId);
                     }
-                    if (gameWinner) {
-                        // TODO
-                        console.log('(Lobby) Game winner', gameWinner);
-                        alert('Game winner: ' + JSON.stringify(gameWinner));
+                    if (winner) {
+                        console.log('(Lobby) Game winner', { winner, cardHistory });
+                        this.gameWinner = winner;
+                        this.cardHistory = cardHistory;
+                        // we need to copy it so it doesn't change when the lobby is reset
+                        this.players = [...this.$store.state.currentLobby.players];
+                        this.$store.state.winnerDialog = true;
                     }
                 })
             );

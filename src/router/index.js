@@ -24,11 +24,10 @@ const routes = [
         component: () => import('../views/Login.vue'),
     },
     {
-        path: '/lobby/:id',
+        path: '/lobby',
         name: 'Lobby',
         component: () => import('../views/Lobby.vue'),
     },
-    // TODO: 404
     {
         path: '*',
         component: () => import('../views/NotFound.vue'),

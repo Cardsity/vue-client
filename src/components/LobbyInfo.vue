@@ -8,7 +8,11 @@
                     depressed
                     color="primary"
                     :disabled="lobby.players.length < 3"
-                    v-if="$store.state.loggedIn === lobby.players[0].clientID"
+                    v-if="
+                        lobby.players &&
+                        lobby.players.length > 0 &&
+                        $store.state.loggedIn === lobby.players[0].owner.id
+                    "
                     @click="startGame"
                 >
                     <v-icon>launch</v-icon>
@@ -23,12 +27,13 @@
                     <span
                         v-if="lobby.players && lobby.players.length > 0"
                         :style="`color: ${lobby.players[0].color};`"
-                        >{{ lobby.players[0].name }}</span
                     >
+                        {{ lobby.players[0].owner.name }}
+                    </span>
                 </p>
                 <p>
                     Score limit:
-                    <span>{{ lobby.pointLimit }}</span>
+                    <span>{{ lobby.maxPoints }}</span>
                 </p>
                 <p>
                     Round limit:
@@ -36,7 +41,20 @@
                 </p>
                 <p>
                     Pick limit:
-                    <span>{{ `${lobby.pickLimit}ms` }}</span>
+                    <span>{{ `${lobby.pickLimit / 1000 / 60} min` }}</span>
+                </p>
+                <p>
+                    Decks:
+                    <v-chip
+                        v-for="deck in lobby.decks"
+                        color="primary"
+                        :key="deck.id"
+                        filter
+                        :value="deck.id"
+                        class="mr-1"
+                    >
+                        {{ deck.name }}
+                    </v-chip>
                 </p>
                 <v-btn color="accent" @click="copyQuickJoinLink">
                     <v-icon>link</v-icon>
@@ -74,7 +92,7 @@
                 console.log('Sending', startGameRequest);
 
                 webSocket.sendRequest(startGameRequest).then(response => {
-                    console.log('Chat response message received', response);
+                    console.log('Start game response message received', response);
 
                     if (response.success) {
                         this.$toasted.show(response.message, {

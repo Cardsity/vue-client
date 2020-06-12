@@ -1,13 +1,13 @@
 <template>
     <div>
-        <v-row no-gutters align="start" justify="start" class="ml-3 mt-3" style="position:relative;">
+        <v-row no-gutters align="start" justify="start" class="ml-3 mt-3" style="position: relative;">
             <!-- Black card -->
             <Card :black="true" :card="lobby.blackCard" :disabled="true"></Card>
             <v-divider vertical class="ml-1"></v-divider>
             <v-spacer></v-spacer>
             <!-- Played cards -->
             <Card
-                :disabled="!$store.state.isCzar || !playedCard.text || $store.state.czarPicked"
+                :disabled="!$store.getters.isCzar || !playedCard.text || $store.state.czarPicked"
                 v-for="(playedCard, index) in $store.state.cards"
                 :space-right="lobby.blackCard.blanks > 1 && (index + 1) % lobby.blackCard.blanks === 0"
                 :key="index"
@@ -38,8 +38,8 @@
                 @click="submitCards"
                 :disabled="
                     $store.state.sentCards ||
-                        $store.getters.selectedPlayerCards.length <
-                            $store.state.currentLobby.blackCard.blanks
+                    $store.getters.selectedPlayerCards.length <
+                        $store.state.currentLobby.blackCard.blanks
                 "
             >
                 <v-icon>send</v-icon>
@@ -56,7 +56,7 @@
 
             <!-- Player's hand -->
             <v-col style="position: relative;">
-                <div class="czar-overlay" v-if="$store.state.isCzar">
+                <div class="czar-overlay" v-if="$store.getters.isCzar">
                     You are the Card Czar this round!
                 </div>
                 <v-container fluid class="ml-2">
@@ -73,8 +73,6 @@
                     </v-row>
                 </v-container>
             </v-col>
-
-            <!--<v-spacer></v-spacer>-->
         </v-row>
     </div>
 </template>
@@ -128,7 +126,7 @@
                 const webSocket = this.$store.state.connection;
 
                 const cardPlayRequest = {
-                    playedCards: this.$store.getters.selectedPlayerCards,
+                    cards: this.$store.getters.selectedPlayerCards.map(x => x.text),
                 };
                 console.log('Sending', cardPlayRequest);
 
@@ -138,7 +136,7 @@
                     if (response.success) {
                         this.$store.state.sentCards = true;
                     } else {
-                        console.error(response);
+                        console.error('Card play response failed');
                         this.$toasted.show(response.message, {
                             icon: 'error',
                             duration: 1000,

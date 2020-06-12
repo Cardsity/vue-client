@@ -44,18 +44,18 @@
                                 </v-slider>
                                 <v-slider
                                     :disabled="$store.state.joinLoading"
-                                    v-model="settingPointLimit"
+                                    v-model="settingMaxPoints"
                                     label="Score limit"
                                     step="1"
                                     dense
                                     min="5"
-                                    max="20"
+                                    max="25"
                                     ticks="always"
                                     required
                                 >
                                     <template v-slot:append>
                                         <v-label class="mt-0 pt-0">
-                                            {{ settingPointLimit }}
+                                            {{ settingMaxPoints }}
                                         </v-label>
                                     </template>
                                 </v-slider>
@@ -83,7 +83,7 @@
                                     step="1"
                                     dense
                                     min="5"
-                                    max="15"
+                                    max="20"
                                     ticks="always"
                                     required
                                 >
@@ -101,38 +101,45 @@
                                     type="password"
                                     outlined
                                 ></v-text-field>
+
+                                <v-label>Official decks</v-label>
+                                <v-chip-group
+                                    multiple
+                                    column
+                                    active-class="primary--text"
+                                    v-model="settingOfficialDecks"
+                                >
+                                    <v-chip
+                                        v-for="deck in officialDecks"
+                                        :key="deck.id"
+                                        :disabled="$store.state.joinLoading"
+                                        filter
+                                        outlined
+                                        ripple
+                                        :value="deck.id"
+                                    >
+                                        {{ deck.name }}
+                                    </v-chip>
+                                </v-chip-group>
+
                                 <v-autocomplete
-                                    :disabled="$store.state.joinLoading"
                                     v-model="settingDeckIds"
+                                    :items="decksFound"
+                                    :loading="decksLoading"
+                                    :search-input.sync="deckSearch"
+                                    hide-no-data
+                                    return-object
                                     outlined
+                                    :disabled="$store.state.joinLoading"
                                     dense
                                     chips
                                     small-chips
                                     deletable-chips
-                                    :items="availableCardSets"
                                     item-text="name"
-                                    label="Card sets"
+                                    label="Custom decks"
                                     multiple
                                     required
                                 ></v-autocomplete>
-                                <!--<v-slide-group multiple show-arrows>
-                                    <v-slide-item
-                                        v-for="set in availableCardSets"
-                                        :key="set.name"
-                                        v-slot:default="{ active, toggle }"
-                                    >
-                                        <v-btn
-                                            class="mx-2"
-                                            :input-value="active"
-                                            active-class="purple white&#45;&#45;text"
-                                            depressed
-                                            rounded
-                                            @click="toggle"
-                                        >
-                                            {{ set.name }}
-                                        </v-btn>
-                                    </v-slide-item>
-                                </v-slide-group>-->
                             </v-col>
                         </v-row>
                     </v-container>
@@ -160,33 +167,82 @@
             return {
                 // TODO: reset on open to defaults
                 settingName: '',
-                settingPointLimit: 10,
+                settingMaxPoints: 10,
                 settingMaxPlayers: 10,
-                settingPickLimit: 3,
+                settingPickLimit: 1,
                 settingMaxRounds: 10,
                 settingLobbyPassword: '',
                 settingDeckIds: [],
-                availableCardSets: [
-                    { id: 1, name: '1' },
-                    { id: 11, name: '11' },
-                    { id: 123, name: 'English card set' },
-                    { id: 312, name: 'German card set' },
-                ],
+                settingOfficialDecks: [],
+                // autocomplete
+                officialDecks: [],
+                deckSearch: null,
+                decksFound: [],
+                decksLoading: false,
             };
+        },
+        async mounted() {
+            const decksUrl = 'http://127.0.0.1:8020/deck/list/json/';
+            const response = await fetch(decksUrl, {});
+            console.log('(Create Lobby) official decks response', response);
+            const decks = await response.json();
+            if (decks) {
+                const officialDecks = decks.decks
+                    .filter(x => x.official)
+                    .sort((x1, x2) => x1.id - x2.id);
+                console.log('(Create Lobby) officialDecks found', officialDecks);
+                this.officialDecks = officialDecks;
+            }
+            // TODO: show error when it failed
+        },
+        watch: {
+            async deckSearch(val) {
+                // You need to search at least 3 chars
+                if (!val || val.length < 3) {
+                    return;
+                }
+                // Items have already been requested
+                if (this.decksLoading) {
+                    return;
+                }
+                this.decksLoading = true;
+
+                const decksUrl = 'http://127.0.0.1:8020/deck/list/json/';
+                const response = await fetch(decksUrl, {});
+                console.log('(Create Lobby) deck search response', response);
+                const decks = await response.json();
+                //TODO: debounce
+                if (decks) {
+                    // TODO: not official and card deck server should implement a search
+                    const decksFound = decks.decks.filter(x =>
+                        x.name.toLowerCase().includes(val.toLowerCase())
+                    );
+                    console.log({ decksFound, val, decks });
+                    this.decksFound = decksFound;
+                    this.decksLoading = false;
+                }
+            },
         },
         methods: {
             createLobby() {
                 this.$store.state.joinLoading = true;
                 const webSocket = this.$store.state.connection;
 
+                console.log({ offDecks: this.settingOfficialDecks, otherDecks: this.settingDeckIds });
+
+                const sendDeckIds = this.settingDeckIds.map(x => x.id).concat(this.settingOfficialDecks);
+                console.log('sendDeckIds', sendDeckIds);
+
                 const lobbyCreateRequest = {
-                    lobbyPassword: this.settingLobbyPassword,
-                    pointLimit: this.settingPointLimit,
-                    pickLimit: this.settingPickLimit,
-                    maxRounds: this.settingMaxRounds,
-                    maxPlayers: this.settingMaxPlayers,
                     name: this.settingName,
-                    deckIds: this.settingDeckIds,
+                    password: this.settingLobbyPassword,
+
+                    pickLimit: this.settingPickLimit,
+                    maxPlayers: this.settingMaxPlayers,
+                    maxRounds: this.settingMaxRounds,
+                    maxPoints: this.settingMaxPoints,
+
+                    decks: sendDeckIds.map(x => `${x}`),
                 };
                 console.log('Sending', lobbyCreateRequest);
                 webSocket.sendRequest(lobbyCreateRequest).then(response => {
@@ -197,7 +253,7 @@
                         const createdLobby = response;
                         this.$store.commit('setCurrentLobby', createdLobby);
                         this.$store.state.createDialog = false;
-                        this.$router.push(`/lobby/${createdLobby.id}`);
+                        this.$router.push(`/lobby`);
                     } else {
                         console.error(response);
                         this.$toasted.show(response.message, {

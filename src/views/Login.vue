@@ -97,7 +97,10 @@
                 this.sending = true;
                 const webSocket = this.$store.state.connection;
 
-                const loginRequest = { name: this.nickname, bigSecret: false, colorHex: this.color };
+                const loginRequest = {
+                    name: this.nickname,
+                    color: this.color,
+                };
                 console.log('Sending', loginRequest);
 
                 webSocket.sendRequest(loginRequest).then(response => {
@@ -112,7 +115,7 @@
                             duration: 5000,
                         });
 
-                        this.$store.commit('setLoggedIn', response.clientID);
+                        this.$store.commit('setLoggedIn', response.you.id);
                         this.$router.push('/lobbyList');
                     } else {
                         console.error(response);

@@ -96,7 +96,7 @@
                 this.loading = true;
                 const webSocket = this.$store.state.connection;
 
-                const chatRequest = { text: this.chatMessage };
+                const chatRequest = { message: this.chatMessage };
                 console.log('Sending', chatRequest);
 
                 webSocket.sendRequest(chatRequest).then(response => {

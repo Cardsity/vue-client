@@ -4,13 +4,13 @@
             class="mx-auto"
             elevation="12"
             outlined
-            style="position:relative; overflow:hidden; height: fit-content;"
+            style="position: relative; overflow: hidden; height: fit-content;"
         >
             <v-toolbar color="primary" dark flat>
                 <v-toolbar-title><v-icon>help</v-icon> Help</v-toolbar-title>
             </v-toolbar>
 
-            <v-container fluid style="">
+            <v-container fluid>
                 <v-expansion-panels accordion multiple hover>
                     <v-expansion-panel>
                         <v-expansion-panel-header>

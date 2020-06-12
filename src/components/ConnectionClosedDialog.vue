@@ -1,6 +1,6 @@
 <template>
-    <v-dialog v-model="connectionClosed" persistent class="error" max-width="500">
-        <v-card :loading="reconnecting">
+    <v-dialog v-model="$store.state.connectionClosed" persistent class="error" max-width="500">
+        <v-card :loading="$store.state.reconnecting">
             <v-card-title>Connection closed!</v-card-title>
             <v-card-text>
                 <p class="error--text">
@@ -13,7 +13,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn dark @click="reconnect" :disabled="reconnecting">
+                <v-btn dark @click="reconnect" :disabled="$store.state.reconnecting">
                     Retry
                     <v-icon>refresh</v-icon>
                 </v-btn>
@@ -25,14 +25,6 @@
 <script>
     export default {
         name: 'ConnectionClosedDialog',
-        computed: {
-            connectionClosed() {
-                return this.$store.state.connectionClosed;
-            },
-            reconnecting() {
-                return this.$store.state.reconnecting;
-            },
-        },
         methods: {
             reconnect() {
                 this.$store.dispatch('reconnect');

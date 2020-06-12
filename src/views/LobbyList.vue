@@ -33,15 +33,15 @@
                     :server-items-length="totalLobbies"
                     :loading="lobbiesLoading"
                 >
-                    <template v-slot:item.passwordProtected="{ item }">
-                        <v-icon v-if="item.passwordProtected" color="error">lock</v-icon>
+                    <template v-slot:item.password="{ item }">
+                        <v-icon v-if="item.password" color="error">lock</v-icon>
                         <v-icon v-else color="success">lock_open</v-icon>
                     </template>
 
                     <template v-slot:item.join="{ item }">
                         <v-btn
                             color="secondary"
-                            :disabled="item.currentPlayers >= item.maxPlayers"
+                            :disabled="item.playerCount >= item.maxPlayers"
                             fab
                             x-small
                             @click.stop="$store.dispatch('joinLobby', item)"
@@ -93,7 +93,7 @@
                     },
                     {
                         text: 'Current Players',
-                        value: 'currentPlayers',
+                        value: 'playerCount',
                         width: 15,
                     },
                     {
@@ -103,7 +103,7 @@
                     },
                     {
                         text: 'Password protected',
-                        value: 'passwordProtected',
+                        value: 'password',
                         align: 'center',
                         width: 15,
                     },
@@ -115,6 +115,12 @@
                     },
                 ],
             };
+        },
+        beforeMount() {
+            // TODO: handle this globally!
+            if (this.$store.state.currentLobby) {
+                this.$router.push('/lobby');
+            }
         },
         mounted() {
             this.loadLobbies();

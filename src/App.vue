@@ -80,7 +80,13 @@
 
     export default {
         name: 'App',
-        components: { HelpDialog, LobbyLeaveDialog, ShareDialog, ConnectionClosedDialog, AboutDialog },
+        components: {
+            HelpDialog,
+            LobbyLeaveDialog,
+            ShareDialog,
+            ConnectionClosedDialog,
+            AboutDialog,
+        },
         mounted() {
             if (!this.$store.state.loggedIn && this.$route.path !== '/login') {
                 this.$router.push('/login');
