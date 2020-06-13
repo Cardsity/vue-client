@@ -41,10 +41,7 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on }">
                             <v-btn
-                                v-if="
-                                    player.owner.id !== $store.state.loggedIn &&
-                                    $store.state.loggedIn === lobby.players[0].owner.id
-                                "
+                                v-if="player.owner.id !== $store.state.loggedIn && $store.getters.isHost"
                                 icon
                                 v-on="on"
                                 @click="showKickDialog(player)"

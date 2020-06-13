@@ -3,7 +3,11 @@
         <v-form>
             <v-card :loading="$store.state.joinLoading">
                 <v-card-title>
-                    <span class="text-h5">
+                    <span class="text-h5" v-if="lobby">
+                        <v-icon>edit</v-icon>
+                        Edit Lobby
+                    </span>
+                    <span class="text-h5" v-else>
                         <v-icon>add_circle</v-icon>
                         Create Lobby
                     </span>
@@ -17,9 +21,9 @@
                         <v-row>
                             <v-col cols="12">
                                 <v-text-field
-                                    :disabled="$store.state.joinLoading"
+                                    :disabled="$store.state.joinLoading || !!lobby"
                                     label="Name"
-                                    v-model="settingName"
+                                    v-model="creatingLobby.name"
                                     required
                                     dense
                                     outlined
@@ -27,7 +31,7 @@
                                 ></v-text-field>
                                 <v-slider
                                     :disabled="$store.state.joinLoading"
-                                    v-model="settingMaxPlayers"
+                                    v-model="creatingLobby.maxPlayers"
                                     label="Max players"
                                     step="1"
                                     dense
@@ -38,13 +42,13 @@
                                 >
                                     <template v-slot:append>
                                         <v-label class="mt-0 pt-0">
-                                            {{ settingMaxPlayers }}
+                                            {{ creatingLobby.maxPlayers }}
                                         </v-label>
                                     </template>
                                 </v-slider>
                                 <v-slider
                                     :disabled="$store.state.joinLoading"
-                                    v-model="settingMaxPoints"
+                                    v-model="creatingLobby.maxPoints"
                                     label="Score limit"
                                     step="1"
                                     dense
@@ -55,13 +59,13 @@
                                 >
                                     <template v-slot:append>
                                         <v-label class="mt-0 pt-0">
-                                            {{ settingMaxPoints }}
+                                            {{ creatingLobby.maxPoints }}
                                         </v-label>
                                     </template>
                                 </v-slider>
                                 <v-slider
                                     :disabled="$store.state.joinLoading"
-                                    v-model="settingPickLimit"
+                                    v-model="creatingLobby.pickLimit"
                                     label="Card pick time limit (minutes)"
                                     step="0.5"
                                     dense
@@ -72,13 +76,13 @@
                                 >
                                     <template v-slot:append>
                                         <v-label class="mt-0 pt-0">
-                                            {{ settingPickLimit }}
+                                            {{ creatingLobby.pickLimit }}
                                         </v-label>
                                     </template>
                                 </v-slider>
                                 <v-slider
                                     :disabled="$store.state.joinLoading"
-                                    v-model="settingMaxRounds"
+                                    v-model="creatingLobby.maxRounds"
                                     label="Rounds"
                                     step="1"
                                     dense
@@ -89,13 +93,13 @@
                                 >
                                     <template v-slot:append>
                                         <v-label class="mt-0 pt-0">
-                                            {{ settingMaxRounds }}
+                                            {{ creatingLobby.maxRounds }}
                                         </v-label>
                                     </template>
                                 </v-slider>
                                 <v-slider
                                     :disabled="$store.state.joinLoading"
-                                    v-model="settingMaxJokerRequests"
+                                    v-model="creatingLobby.maxJokerRequests"
                                     label="Max joker requests"
                                     step="1"
                                     dense
@@ -106,13 +110,13 @@
                                 >
                                     <template v-slot:append>
                                         <v-label class="mt-0 pt-0">
-                                            {{ settingMaxJokerRequests }}
+                                            {{ creatingLobby.maxJokerRequests }}
                                         </v-label>
                                     </template>
                                 </v-slider>
                                 <v-text-field
                                     :disabled="$store.state.joinLoading"
-                                    v-model="settingLobbyPassword"
+                                    v-model="creatingLobby.password"
                                     dense
                                     label="Password (optional)"
                                     type="password"
@@ -124,7 +128,7 @@
                                     multiple
                                     column
                                     active-class="primary--text"
-                                    v-model="settingOfficialDecks"
+                                    v-model="settingOfficialDeckIds"
                                 >
                                     <v-chip
                                         v-for="deck in officialDecks"
@@ -140,7 +144,7 @@
                                 </v-chip-group>
 
                                 <v-autocomplete
-                                    v-model="settingDeckIds"
+                                    v-model="settingCustomDecks"
                                     :items="decksFound"
                                     :loading="decksLoading"
                                     :search-input.sync="deckSearch"
@@ -167,7 +171,17 @@
                         color="success darken-1"
                         :disabled="$store.state.joinLoading"
                         text
+                        @click="editLobby"
+                        v-if="lobby"
+                    >
+                        Edit
+                    </v-btn>
+                    <v-btn
+                        color="success darken-1"
+                        :disabled="$store.state.joinLoading"
+                        text
                         @click="createLobby"
+                        v-else
                     >
                         Create
                     </v-btn>
@@ -180,18 +194,21 @@
 <script>
     export default {
         name: 'CreateLobbyDialog',
+        props: ['lobby'],
         data() {
             return {
-                // TODO: reset on open to defaults
-                settingName: '',
-                settingMaxPoints: 10,
-                settingMaxPlayers: 10,
-                settingPickLimit: 1,
-                settingMaxRounds: 10,
-                settingMaxJokerRequests: 2,
-                settingLobbyPassword: '',
-                settingDeckIds: [],
-                settingOfficialDecks: [],
+                // TODO: for create: reset on open to defaults
+                creatingLobby: {
+                    name: '',
+                    maxPoints: 10,
+                    maxPlayers: 10,
+                    pickLimit: 1,
+                    maxRounds: 10,
+                    maxJokerRequests: 2,
+                    password: '',
+                },
+                settingCustomDecks: [],
+                settingOfficialDeckIds: [],
                 // autocomplete
                 officialDecks: [],
                 deckSearch: null,
@@ -199,17 +216,44 @@
                 decksLoading: false,
             };
         },
+        // TODO: on dialog open instead of mounted?
         async mounted() {
+            if (this.lobby) {
+                Object.assign(this.creatingLobby, this.lobby);
+                // Lobby object from server has pick limit in ms
+                this.creatingLobby.pickLimit /= 1000 * 60;
+            }
+
             const decksUrl = 'http://127.0.0.1:8020/deck/list/json/';
-            const response = await fetch(decksUrl, {});
-            console.log('(Create Lobby) official decks response', response);
+            const response = await fetch(decksUrl);
+            console.log('(Create/Edit Lobby) official decks response', response);
             const decks = await response.json();
             if (decks) {
                 const officialDecks = decks.decks
                     .filter(x => x.official)
                     .sort((x1, x2) => x1.id - x2.id);
-                console.log('(Create Lobby) officialDecks found', officialDecks);
+                console.log('(Create/Edit Lobby) officialDecks found', officialDecks);
                 this.officialDecks = officialDecks;
+
+                if (this.creatingLobby.decks) {
+                    this.creatingLobby.decks.forEach(x => {
+                        const offDeck = officialDecks.find(offDeck => offDeck.id === x.id);
+                        if (offDeck) {
+                            console.log(
+                                '(Create/Edit Lobby) editing lobby deck official deck found',
+                                offDeck
+                            );
+                            this.settingOfficialDeckIds.push(offDeck.id);
+                        } else {
+                            console.log(
+                                '(Create/Edit Lobby) editing lobby deck not official adding to custom',
+                                x
+                            );
+                            this.decksFound.push(x);
+                            this.settingCustomDecks.push(x);
+                        }
+                    });
+                }
             }
             // TODO: show error when it failed
         },
@@ -226,40 +270,50 @@
                 this.decksLoading = true;
 
                 const decksUrl = 'http://127.0.0.1:8020/deck/list/json/';
-                const response = await fetch(decksUrl, {});
-                console.log('(Create Lobby) deck search response', response);
+                const response = await fetch(decksUrl);
+                console.log('(Create/Edit Lobby) deck search response', response);
                 const decks = await response.json();
                 //TODO: debounce
                 if (decks) {
-                    // TODO: not official and card deck server should implement a search
-                    const decksFound = decks.decks.filter(x =>
-                        x.name.toLowerCase().includes(val.toLowerCase())
+                    // TODO: card deck server should implement a search
+                    const decksFound = decks.decks.filter(
+                        x => !x.official && x.name.toLowerCase().includes(val.toLowerCase())
                     );
-                    console.log({ decksFound, val, decks });
+                    console.log('(Create/Edit Lobby) custom deck search found', {
+                        decksFound,
+                        val,
+                        decks,
+                    });
                     this.decksFound = decksFound;
                     this.decksLoading = false;
                 }
             },
         },
         methods: {
+            // TODO: createLobby / editLobby in one method
             createLobby() {
                 this.$store.state.joinLoading = true;
                 const webSocket = this.$store.state.connection;
 
-                console.log({ offDecks: this.settingOfficialDecks, otherDecks: this.settingDeckIds });
+                const sendDeckIds = this.settingCustomDecks
+                    .map(x => x.id)
+                    .concat(this.settingOfficialDeckIds);
 
-                const sendDeckIds = this.settingDeckIds.map(x => x.id).concat(this.settingOfficialDecks);
-                console.log('sendDeckIds', sendDeckIds);
+                console.log('(Create/Edit Lobby) selected decks:', {
+                    officialDeckIds: this.settingOfficialDeckIds,
+                    customDecks: this.settingCustomDecks,
+                    sendDeckIds,
+                });
 
                 const lobbyCreateRequest = {
-                    name: this.settingName,
-                    password: this.settingLobbyPassword,
+                    name: this.creatingLobby.name,
+                    password: this.creatingLobby.password,
 
-                    pickLimit: this.settingPickLimit,
-                    maxPlayers: this.settingMaxPlayers,
-                    maxRounds: this.settingMaxRounds,
-                    maxPoints: this.settingMaxPoints,
-                    maxJokerRequests: this.settingMaxJokerRequests,
+                    pickLimit: this.creatingLobby.pickLimit,
+                    maxPlayers: this.creatingLobby.maxPlayers,
+                    maxRounds: this.creatingLobby.maxRounds,
+                    maxPoints: this.creatingLobby.maxPoints,
+                    maxJokerRequests: this.creatingLobby.maxJokerRequests,
 
                     decks: sendDeckIds.map(x => `${x}`),
                 };
@@ -273,6 +327,46 @@
                         this.$store.commit('setCurrentLobby', createdLobby);
                         this.$store.state.createDialog = false;
                         this.$router.push(`/lobby`);
+                    } else {
+                        console.error(response);
+                        this.$toasted.show(response.message, {
+                            icon: 'error',
+                            duration: 1000,
+                        });
+                    }
+                });
+            },
+            editLobby() {
+                this.$store.state.joinLoading = true;
+                const webSocket = this.$store.state.connection;
+
+                const sendDeckIds = this.settingCustomDecks
+                    .map(x => x.id)
+                    .concat(this.settingOfficialDeckIds);
+                console.log('sendDeckIds', sendDeckIds);
+
+                const lobbyEditRequest = {
+                    password: this.creatingLobby.password,
+
+                    pickLimit: this.creatingLobby.pickLimit,
+                    maxPlayers: this.creatingLobby.maxPlayers,
+                    maxRounds: this.creatingLobby.maxRounds,
+                    maxPoints: this.creatingLobby.maxPoints,
+                    maxJokerRequests: this.creatingLobby.maxJokerRequests,
+
+                    decks: sendDeckIds.map(x => `${x}`),
+                };
+                console.log('Sending', lobbyEditRequest);
+                webSocket.sendRequest(lobbyEditRequest).then(response => {
+                    this.$store.state.joinLoading = false;
+                    console.log('Edit lobby response message received', response);
+
+                    if (response.success) {
+                        this.$store.state.createDialog = false;
+                        this.$toasted.show(response.message, {
+                            icon: 'info',
+                            duration: 2500,
+                        });
                     } else {
                         console.error(response);
                         this.$toasted.show(response.message, {

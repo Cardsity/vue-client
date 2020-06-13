@@ -44,6 +44,13 @@ export default new Vuex.Store({
                 ? selectedPlayerCards[selectedPlayerCards.length - 1]
                 : null;
         },
+        isHost: state => {
+            return (
+                state.currentLobby.players &&
+                state.currentLobby.players.length > 0 &&
+                state.loggedIn === state.currentLobby.players[0].owner.id
+            );
+        },
         isCzar: state => {
             return state.loggedIn === state.currentLobby.czar.owner.id;
         },

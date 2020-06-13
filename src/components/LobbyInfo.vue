@@ -1,18 +1,23 @@
 <template>
     <v-main>
+        <CreateLobbyDialog :lobby="lobby" v-if="$store.getters.isHost"></CreateLobbyDialog>
         <v-card class="mx-auto" max-width="750" outlined>
             <v-card-title>
                 Lobby info
+                <v-btn
+                    depressed
+                    v-if="$store.getters.isHost"
+                    @click="$store.state.createDialog = true"
+                    icon
+                >
+                    <v-icon>edit</v-icon>
+                </v-btn>
                 <v-spacer></v-spacer>
                 <v-btn
                     depressed
                     color="primary"
                     :disabled="lobby.players.length < 3"
-                    v-if="
-                        lobby.players &&
-                        lobby.players.length > 0 &&
-                        $store.state.loggedIn === lobby.players[0].owner.id
-                    "
+                    v-if="$store.getters.isHost"
                     @click="startGame"
                 >
                     <v-icon>launch</v-icon>
@@ -80,11 +85,13 @@
 <script>
     import PlayerList from './PlayerList';
     import Chat from './Chat';
+    import CreateLobbyDialog from './CreateLobbyDialog';
 
     export default {
         name: 'LobbyInfo',
         props: ['lobby'],
         components: {
+            CreateLobbyDialog,
             PlayerList,
             Chat,
         },
