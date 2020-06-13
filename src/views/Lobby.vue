@@ -34,11 +34,6 @@
                 cardHistory: null,
             };
         },
-        beforeMount() {
-            if (!this.$store.state.currentLobby) {
-                this.$router.push('/');
-            }
-        },
         mounted() {
             const webSocket = this.$store.state.connection;
 
@@ -56,6 +51,8 @@
                         pickLimit,
                         unrevealedCardOwnerId,
                         newHand,
+                        isCausedByJokerRequest,
+                        jokerRequestsRemaining,
                         winnerId,
                         winner,
                         cardHistory,
@@ -87,12 +84,20 @@
                         }
                     }
                     if (newHand) {
-                        console.log('(Lobby) Update Hand', newHand);
+                        console.log(
+                            '(Lobby) Update Hand',
+                            newHand,
+                            'joker requests',
+                            jokerRequestsRemaining
+                        );
                         // this also resets the selected cards because we replace it
                         this.$store.state.playerCards = newHand;
-                        // we can select cards again
-                        this.$store.state.sentCards = false;
-                        this.$store.state.cards = [];
+                        if (!isCausedByJokerRequest) {
+                            // we can select cards again
+                            this.$store.state.sentCards = false;
+                            this.$store.state.cards = [];
+                        }
+                        this.$store.state.jokerRequestsRemaining = jokerRequestsRemaining;
                     }
                     if (unrevealedCardOwnerId) {
                         this.$store.state.cards.push({ text: '' });

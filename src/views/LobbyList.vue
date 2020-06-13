@@ -116,12 +116,6 @@
                 ],
             };
         },
-        beforeMount() {
-            // TODO: handle this globally!
-            if (this.$store.state.currentLobby) {
-                this.$router.push('/lobby');
-            }
-        },
         mounted() {
             this.loadLobbies();
         },

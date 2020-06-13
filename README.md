@@ -39,5 +39,9 @@ docker run -it -p 8080:8080 --rm --name cardsity-vue-client cardsity-vue-client
 
 ### TODO
 - Option to preview the black cards filled with the text of the selected white cards
-- Joker Cards
 - Write Tests
+- Cards with long text
+- Validate forms better
+- Press enter on forms
+- Focus text fields in dialogs
+- Remove console logs

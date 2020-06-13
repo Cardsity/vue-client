@@ -14,9 +14,9 @@
             <v-card-text>
                 <span class="subtitle-1">
                     Please enter the lobby password for
-                    <strong class="primary--text text--lighten-1">{{
-                        $store.state.joinedLobby.name
-                    }}</strong>
+                    <strong class="primary--text text--lighten-1">
+                        {{ $store.state.joinedLobby.name }}
+                    </strong>
                 </span>
                 <v-container>
                     <v-text-field
@@ -63,7 +63,7 @@
             joinPasswordLobby() {
                 this.$store.state.joinLoading = true;
                 this.$store.dispatch('moveToLobby', {
-                    item: this.$store.state.joinedLobby,
+                    lobbyId: this.$store.state.joinedLobby.id,
                     password: this.password,
                 });
             },

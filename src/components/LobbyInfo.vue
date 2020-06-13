@@ -44,6 +44,10 @@
                     <span>{{ `${lobby.pickLimit / 1000 / 60} min` }}</span>
                 </p>
                 <p>
+                    Max joker requests:
+                    <span>{{ `${lobby.maxJokerRequests}` }}</span>
+                </p>
+                <p>
                     Decks:
                     <v-chip
                         v-for="deck in lobby.decks"
@@ -109,7 +113,32 @@
                 });
             },
             copyQuickJoinLink() {
-                alert('TODO');
+                const textArea = document.createElement('textarea');
+                textArea.value = `${document.location.protocol}//${document.location.host}/#/quickJoin/${this.$store.state.currentLobby.id}/${this.$store.state.currentLobby.password}`;
+
+                // Avoid scrolling to bottom
+                textArea.style.top = '0';
+                textArea.style.left = '0';
+                textArea.style.position = 'fixed';
+
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    this.$toasted.show('Successfully copied to clipboard', {
+                        icon: 'info',
+                        duration: 2500,
+                    });
+                } else {
+                    this.$toasted.show('Failed copying to clipboard', {
+                        icon: 'error',
+                        duration: 1000,
+                    });
+                }
+
+                document.body.removeChild(textArea);
             },
         },
     };

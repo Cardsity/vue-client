@@ -30,6 +30,7 @@ export default new Vuex.Store({
         timer: 0,
         playerCards: [],
         sentCards: false,
+        jokerRequestsRemaining: 0,
         czarPicked: null,
     },
     getters: {
@@ -134,17 +135,17 @@ export default new Vuex.Store({
         joinLobby({ state, dispatch }, item) {
             state.joinedLobby = item;
 
-            if (item.passwordProtected) {
+            if (item.password) {
                 state.passwordDialog = true;
             } else {
-                dispatch('moveToLobby', { item });
+                dispatch('moveToLobby', { lobbyId: item.id });
             }
         },
-        moveToLobby({ state, commit }, { item, password = '' }) {
+        moveToLobby({ state, commit }, { lobbyId, password = '' }) {
             const webSocket = state.connection;
 
             const joinRequest = {
-                lobbyId: item.id,
+                lobbyId: Number(lobbyId),
                 password: password,
             };
             console.log('Sending', joinRequest);
@@ -179,8 +180,8 @@ export default new Vuex.Store({
                 console.log('Leave lobby response message received', response);
 
                 if (response.success) {
-                    router.push('/');
                     commit('setCurrentLobby', null);
+                    router.push('/');
                 } else {
                     console.error(response);
                     this.$toasted.show(response.message, {

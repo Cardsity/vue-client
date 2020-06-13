@@ -87,11 +87,6 @@
             ConnectionClosedDialog,
             AboutDialog,
         },
-        mounted() {
-            if (!this.$store.state.loggedIn && this.$route.path !== '/login') {
-                this.$router.push('/login');
-            }
-        },
         created() {
             this.$store.dispatch('connect');
         },

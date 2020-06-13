@@ -91,6 +91,14 @@
         mounted() {
             // dynamically select a random color
             this.color = this.swatches[Math.floor(Math.random() * this.swatches.length)][0];
+
+            const { params } = this.$route;
+            if (params.id) {
+                // we set the values for the quick join
+                // TODO: this does set it when we are already on the login page and change to url to a quick join url
+                this.joinLobby = params.id;
+                this.joinLobbyPassword = params.password;
+            }
         },
         methods: {
             login() {
@@ -116,7 +124,20 @@
                         });
 
                         this.$store.commit('setLoggedIn', response.you.id);
-                        this.$router.push('/lobbyList');
+
+                        if (this.joinLobby) {
+                            console.log(
+                                '(Quick Join) move to lobby',
+                                this.joinLobby,
+                                this.joinLobbyPassword
+                            );
+                            this.$store.dispatch('moveToLobby', {
+                                lobbyId: this.joinLobby,
+                                password: this.joinLobbyPassword,
+                            });
+                        } else {
+                            this.$router.push('/lobbyList');
+                        }
                     } else {
                         console.error(response);
                         this.$toasted.show(response.message, {

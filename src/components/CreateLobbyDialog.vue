@@ -93,6 +93,23 @@
                                         </v-label>
                                     </template>
                                 </v-slider>
+                                <v-slider
+                                    :disabled="$store.state.joinLoading"
+                                    v-model="settingMaxJokerRequests"
+                                    label="Max joker requests"
+                                    step="1"
+                                    dense
+                                    min="0"
+                                    max="10"
+                                    ticks="always"
+                                    required
+                                >
+                                    <template v-slot:append>
+                                        <v-label class="mt-0 pt-0">
+                                            {{ settingMaxJokerRequests }}
+                                        </v-label>
+                                    </template>
+                                </v-slider>
                                 <v-text-field
                                     :disabled="$store.state.joinLoading"
                                     v-model="settingLobbyPassword"
@@ -171,6 +188,7 @@
                 settingMaxPlayers: 10,
                 settingPickLimit: 1,
                 settingMaxRounds: 10,
+                settingMaxJokerRequests: 2,
                 settingLobbyPassword: '',
                 settingDeckIds: [],
                 settingOfficialDecks: [],
@@ -241,6 +259,7 @@
                     maxPlayers: this.settingMaxPlayers,
                     maxRounds: this.settingMaxRounds,
                     maxPoints: this.settingMaxPoints,
+                    maxJokerRequests: this.settingMaxJokerRequests,
 
                     decks: sendDeckIds.map(x => `${x}`),
                 };

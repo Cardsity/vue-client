@@ -70,6 +70,52 @@
                             :blanks="lobby.blackCard.blanks"
                             class="mt-3 mb-3"
                         ></Card>
+
+                        <v-btn
+                            block
+                            x-large
+                            @click="showJokerRequestDialog"
+                            :disabled="$store.state.sentCards || !$store.state.jokerRequestsRemaining"
+                        >
+                            <v-icon>library_add</v-icon>
+                            Request joker card ({{ $store.state.jokerRequestsRemaining }}
+                            remaining)
+                        </v-btn>
+
+                        <v-dialog v-model="jokerRequestDialog" width="500">
+                            <v-card>
+                                <v-card>
+                                    <v-card-title class="headline">
+                                        <span class="headline">Request joker card</span>
+                                    </v-card-title>
+
+                                    <v-card-text>
+                                        <v-text-field
+                                            label="Text"
+                                            required
+                                            type="text"
+                                            prepend-inner-icon="library_add"
+                                            v-model="jokerRequestText"
+                                            clearable
+                                            solo
+                                        ></v-text-field>
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn
+                                            color="primary darken-1"
+                                            text
+                                            outlined
+                                            @click="requestJokerCard"
+                                        >
+                                            Send
+                                            <v-icon>arrow_right</v-icon>
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-card>
+                        </v-dialog>
                     </v-row>
                 </v-container>
             </v-col>
@@ -94,6 +140,8 @@
             return {
                 timerPercent: 100,
                 timerInterval: null,
+                jokerRequestDialog: false,
+                jokerRequestText: '',
             };
         },
         mounted() {
@@ -136,13 +184,43 @@
                     if (response.success) {
                         this.$store.state.sentCards = true;
                     } else {
-                        console.error('Card play response failed');
+                        console.error('Card play request failed');
                         this.$toasted.show(response.message, {
                             icon: 'error',
                             duration: 1000,
                         });
                     }
                 });
+            },
+            showJokerRequestDialog() {
+                this.jokerRequestText = '';
+                this.jokerRequestDialog = true;
+            },
+            requestJokerCard() {
+                this.jokerRequestDialog = false;
+
+                if (this.jokerRequestText) {
+                    const webSocket = this.$store.state.connection;
+
+                    const jokerCardRequest = {
+                        text: this.jokerRequestText,
+                    };
+                    console.log('Sending', jokerCardRequest);
+
+                    webSocket.sendRequest(jokerCardRequest).then(response => {
+                        console.log('Joker card response message received', response);
+
+                        if (response.success) {
+                            //
+                        } else {
+                            console.error('Joker card request failed');
+                            this.$toasted.show(response.message, {
+                                icon: 'error',
+                                duration: 1000,
+                            });
+                        }
+                    });
+                }
             },
         },
         destroyed() {

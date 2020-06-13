@@ -1,5 +1,33 @@
 <template>
     <div>
+        <v-dialog v-model="kickDialog" v-if="playerToKick" width="500">
+            <v-card>
+                <v-card-title class="headline">
+                    <span class="headline">Kick player {{ playerToKick.owner.name }}</span>
+                </v-card-title>
+
+                <v-card-text>
+                    <v-text-field
+                        label="Reason"
+                        required
+                        type="text"
+                        prepend-inner-icon="gavel"
+                        v-model="kickReason"
+                        clearable
+                        solo
+                    ></v-text-field>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary darken-1" text outlined @click="kickPlayer()">
+                        Kick
+                        <v-icon>arrow_right</v-icon>
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
         <v-subheader>Players ({{ `${lobby.players.length}/${lobby.maxPlayers}` }})</v-subheader>
         <v-list-item v-for="(player, i) in lobby.players" :key="i">
             <v-list-item-content>
@@ -19,7 +47,7 @@
                                 "
                                 icon
                                 v-on="on"
-                                @click="kickPlayer(player)"
+                                @click="showKickDialog(player)"
                             >
                                 <v-icon>gavel</v-icon>
                             </v-btn>
@@ -36,16 +64,26 @@
     export default {
         name: 'PlayerList',
         props: ['lobby'],
+        data() {
+            return {
+                kickDialog: false,
+                playerToKick: null,
+                kickReason: '',
+            };
+        },
         methods: {
-            kickPlayer(player) {
+            showKickDialog(player) {
+                this.playerToKick = player;
+                this.kickReason = '';
+                this.kickDialog = true;
+            },
+            kickPlayer() {
+                this.kickDialog = false;
                 const webSocket = this.$store.state.connection;
 
-                const kickReason = prompt('Kick message?');
-                // TODO: make this pretty
-
                 const kickRequest = {
-                    playerId: player.owner.id,
-                    message: kickReason,
+                    playerId: this.playerToKick.owner.id,
+                    message: this.kickReason,
                 };
                 console.log('Sending', kickRequest);
 
