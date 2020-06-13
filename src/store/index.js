@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import router from '../router';
 import WebSocketAsPromised from 'websocket-as-promised';
 
-const SERVER_URL = `${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`;
+const SERVER_URL = `${window.location.host}:9012`;
 Vue.use(Vuex);
 
 export default new Vuex.Store({
