@@ -18,6 +18,3 @@ RUN yarn build
 
 # to make image smaller
 RUN rm -rf node_modules
-
-ENTRYPOINT ["tail"]
-CMD ["-f", "/dev/null"]
