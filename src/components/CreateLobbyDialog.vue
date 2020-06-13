@@ -193,6 +193,7 @@
 
 <script>
     export default {
+        // TODO: rename this to something more suitable
         name: 'CreateLobbyDialog',
         props: ['lobby'],
         data() {
@@ -224,7 +225,7 @@
                 this.creatingLobby.pickLimit /= 1000 * 60;
             }
 
-            const decksUrl = 'http://127.0.0.1:8020/deck/list/json/';
+            const decksUrl = `http://${window.location.host}:8020/deck/list/json/`;
             const response = await fetch(decksUrl);
             console.log('(Create/Edit Lobby) official decks response', response);
             const decks = await response.json();
@@ -269,7 +270,7 @@
                 }
                 this.decksLoading = true;
 
-                const decksUrl = 'http://127.0.0.1:8020/deck/list/json/';
+                const decksUrl = `http://${window.location.host}:8020/deck/list/json/`;
                 const response = await fetch(decksUrl);
                 console.log('(Create/Edit Lobby) deck search response', response);
                 const decks = await response.json();
