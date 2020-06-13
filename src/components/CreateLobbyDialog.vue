@@ -225,7 +225,8 @@
                 this.creatingLobby.pickLimit /= 1000 * 60;
             }
 
-            const decksUrl = `https://${window.location.host}:8020/deck/list/json/`;
+            // TODO: replace
+            const decksUrl = `https://decks.cardsity.app/deck/list/json/`;
             const response = await fetch(decksUrl);
             console.log('(Create/Edit Lobby) official decks response', response);
             const decks = await response.json();
@@ -270,7 +271,8 @@
                 }
                 this.decksLoading = true;
 
-                const decksUrl = `https://${window.location.host}:8020/deck/list/json/`;
+                // TODO: replace
+                const decksUrl = `https://decks.cardsity.app/deck/list/json/`;
                 const response = await fetch(decksUrl);
                 console.log('(Create/Edit Lobby) deck search response', response);
                 const decks = await response.json();
