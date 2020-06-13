@@ -82,7 +82,7 @@ export default new Vuex.Store({
         connect({ state, commit }) {
             console.log('Starting connection to websocket server');
 
-            const webSocket = new WebSocketAsPromised('ws://' + SERVER_URL, {
+            const webSocket = new WebSocketAsPromised('wss://' + SERVER_URL, {
                 packMessage: data => JSON.stringify(data),
                 unpackMessage: data => JSON.parse(data),
                 attachRequestId: (data, requestId) => Object.assign({ requestId: requestId }, data),
