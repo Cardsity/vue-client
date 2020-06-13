@@ -1,5 +1,5 @@
 <template>
-    <v-content class="text-center">
+    <v-main class="text-center">
         <!--<md-empty-state
                 v-icon="error"
                 md-label="404!"
@@ -9,8 +9,8 @@
                 <md-button class="md-primary md-raised" to="/">Go back</md-button>
             </md-empty-state>-->
         <img src="../assets/card-logo-404.png" alt="Logo" class="justify-center" />
-        <p class="headline">There is no page here</p>
-    </v-content>
+        <p class="text-h5">There is no page here</p>
+    </v-main>
 </template>
 
 <script>

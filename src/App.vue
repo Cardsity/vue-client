@@ -42,14 +42,14 @@
             </v-menu>
         </v-app-bar>
 
-        <v-content>
+        <v-main>
             <LobbyLeaveDialog></LobbyLeaveDialog>
             <HelpDialog></HelpDialog>
             <AboutDialog></AboutDialog>
             <ConnectionClosedDialog></ConnectionClosedDialog>
             <ShareDialog></ShareDialog>
             <router-view />
-        </v-content>
+        </v-main>
 
         <v-footer app>
             <span>

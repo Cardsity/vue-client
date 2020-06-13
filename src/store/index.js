@@ -164,6 +164,8 @@ export default new Vuex.Store({
                         icon: 'error',
                         duration: 1000,
                     });
+                    // fallback to lobby list (to fix invalid quick join links)
+                    router.push('/lobbyList');
                 }
             });
         },

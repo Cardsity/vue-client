@@ -2,10 +2,10 @@
     <v-dialog scrollable v-model="$store.state.aboutDialog" max-width="850">
         <v-card>
             <v-card-title>
-                <div class="headline">
+                <div class="text-h5">
                     <v-icon>info</v-icon>
                     <span>Cards Against Humanity</span>
-                    <span class="caption">
+                    <span class="text-caption">
                         Vue client, version 0.1
                     </span>
                 </div>
@@ -15,7 +15,7 @@
                 </v-btn>
             </v-card-title>
             <v-card-text>
-                <p class="headline">Open source licenses</p>
+                <p class="text-h5">Open source licenses</p>
                 <ul class="grid-list-lg">
                     <li v-for="license in licenses" :key="license.name">
                         {{ license.name }} (<a v-bind:href="license.link" target="_blank"

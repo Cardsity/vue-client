@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="$store.state.leaveLobbyDialog" max-width="290">
         <v-card>
-            <v-card-title class="headline">Leave lobby?</v-card-title>
+            <v-card-title class="text-h5">Leave lobby?</v-card-title>
             <v-card-text>
                 Would you like to leave the lobby
             </v-card-text>

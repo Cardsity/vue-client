@@ -1,8 +1,8 @@
 <template>
     <v-dialog v-model="$store.state.passwordDialog" persistent max-width="650">
         <v-card>
-            <v-card-title class="headline">
-                <span class="headline">
+            <v-card-title class="text-h5">
+                <span class="text-h5">
                     This lobby is password protected!
                 </span>
                 <v-spacer></v-spacer>
@@ -12,7 +12,7 @@
             </v-card-title>
 
             <v-card-text>
-                <span class="subtitle-1">
+                <span class="text-subtitle-1">
                     Please enter the lobby password for
                     <strong class="primary--text text--lighten-1">
                         {{ $store.state.joinedLobby.name }}

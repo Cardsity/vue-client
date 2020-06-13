@@ -1,5 +1,5 @@
 <template>
-    <v-content>
+    <v-main>
         <v-card class="mx-auto" max-width="750" outlined>
             <v-card-title>
                 Lobby info
@@ -74,7 +74,7 @@
             <v-card-subtitle>Chat</v-card-subtitle>
             <Chat></Chat>
         </v-card>
-    </v-content>
+    </v-main>
 </template>
 
 <script>

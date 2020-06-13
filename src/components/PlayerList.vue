@@ -2,8 +2,8 @@
     <div>
         <v-dialog v-model="kickDialog" v-if="playerToKick" width="500">
             <v-card>
-                <v-card-title class="headline">
-                    <span class="headline">Kick player {{ playerToKick.owner.name }}</span>
+                <v-card-title class="text-h5">
+                    <span class="text-h5">Kick player {{ playerToKick.owner.name }}</span>
                 </v-card-title>
 
                 <v-card-text>

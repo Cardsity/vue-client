@@ -74,6 +74,7 @@
                         <v-btn
                             block
                             x-large
+                            v-if="lobby.maxJokerRequests"
                             @click="showJokerRequestDialog"
                             :disabled="$store.state.sentCards || !$store.state.jokerRequestsRemaining"
                         >
@@ -85,8 +86,8 @@
                         <v-dialog v-model="jokerRequestDialog" width="500">
                             <v-card>
                                 <v-card>
-                                    <v-card-title class="headline">
-                                        <span class="headline">Request joker card</span>
+                                    <v-card-title class="text-h5">
+                                        <span class="text-h5">Request joker card</span>
                                     </v-card-title>
 
                                     <v-card-text>

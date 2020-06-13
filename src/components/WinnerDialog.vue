@@ -65,7 +65,7 @@
                         large
                     >
                         <v-card elevation="12">
-                            <v-card-title class="title">Round {{ i + 1 }}</v-card-title>
+                            <v-card-title class="text-h6">Round {{ i + 1 }}</v-card-title>
                             <v-card-subtitle>
                                 Won by
                                 <span :style="`color: ${played[0].color};`">{{ played[0].name }}</span>

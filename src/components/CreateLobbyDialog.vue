@@ -3,7 +3,7 @@
         <v-form>
             <v-card :loading="$store.state.joinLoading">
                 <v-card-title>
-                    <span class="headline">
+                    <span class="text-h5">
                         <v-icon>add_circle</v-icon>
                         Create Lobby
                     </span>
