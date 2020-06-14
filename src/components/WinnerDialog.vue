@@ -1,5 +1,5 @@
 <template>
-    <v-dialog persistent v-model="$store.state.winnerDialog" v-if="winner && players">
+    <v-dialog persistent scrollable v-model="$store.state.winnerDialog" v-if="winner && players">
         <v-card>
             <v-toolbar color="primary" dark flat>
                 <v-icon>emoji_events</v-icon>
@@ -8,11 +8,19 @@
                     Game ended!
                 </v-card-title>
                 <v-spacer></v-spacer>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon @click="saveAsImage" v-bind="attrs" v-on="on">
+                            <v-icon>save</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Save card history</span>
+                </v-tooltip>
                 <v-btn icon @click="$store.state.winnerDialog = false">
                     <v-icon>close</v-icon>
                 </v-btn>
             </v-toolbar>
-            <v-container fluid id="wonCard">
+            <v-card-text>
                 <v-card-title>
                     We have a winner
                 </v-card-title>
@@ -55,7 +63,7 @@
                 </v-list>
 
                 <v-card-title>Cards per round</v-card-title>
-                <v-timeline>
+                <v-timeline id="wonTimeline">
                     <v-timeline-item
                         v-for="(played, i) in cardHistory"
                         :key="i"
@@ -82,13 +90,14 @@
                         </v-card>
                     </v-timeline-item>
                 </v-timeline>
-            </v-container>
+            </v-card-text>
         </v-card>
     </v-dialog>
 </template>
 
 <script>
     import Card from './Card';
+    import html2canvas from '@trainiac/html2canvas';
 
     export default {
         name: 'WinnerDialog',
@@ -97,6 +106,34 @@
         computed: {
             sortedPlayers() {
                 return [...this.players].sort((x1, x2) => x2.points - x1.points);
+            },
+        },
+        methods: {
+            async saveAsImage() {
+                const wonTimeline = document.getElementById('wonTimeline');
+                const canvas = await html2canvas(wonTimeline, {
+                    logging: true,
+                    backgroundColor: null,
+                });
+                canvas.toBlob(blob => {
+                    // blob ready, download it
+                    const link = document.createElement('a');
+
+                    let current_datetime = new Date();
+                    let formatted_date =
+                        current_datetime.getFullYear() +
+                        '-' +
+                        (current_datetime.getMonth() + 1) +
+                        '-' +
+                        current_datetime.getDate();
+                    link.download = `card-history-${formatted_date}.png`;
+
+                    link.href = URL.createObjectURL(blob);
+                    link.click();
+
+                    // delete the internal blob reference, to let the browser clear memory from it
+                    URL.revokeObjectURL(link.href);
+                }, 'image/png');
             },
         },
     };

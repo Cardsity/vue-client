@@ -1,8 +1,10 @@
 module.exports = {
     transpileDependencies: ['vuetify'],
+
     pwa: {
         name: 'Cardsity',
-        themeColor: '#4DBA87',
+        // TODO
+        themeColor: '#4dba87',
         msTileColor: '#000000',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',

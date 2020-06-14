@@ -27,7 +27,7 @@
                 </v-card>
             </div>
         </div>
-        <v-form v-on:submit.prevent="sendChat">
+        <v-form @submit.prevent="sendChat">
             <v-text-field
                 filled
                 single-line

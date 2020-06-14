@@ -98,6 +98,7 @@
                                             prepend-inner-icon="library_add"
                                             v-model="jokerRequestText"
                                             clearable
+                                            @keyup.native.enter="requestJokerCard"
                                             solo
                                         ></v-text-field>
                                     </v-card-text>

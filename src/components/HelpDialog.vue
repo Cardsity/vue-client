@@ -1,16 +1,14 @@
 <template>
-    <v-dialog v-model="$store.state.helpDialog" max-width="850">
-        <v-card
-            class="mx-auto"
-            elevation="12"
-            outlined
-            style="position: relative; overflow: hidden; height: fit-content;"
-        >
-            <v-toolbar color="primary" dark flat>
+    <v-dialog scrollable v-model="$store.state.helpDialog" max-width="850">
+        <v-card class="mx-auto" elevation="12" outlined>
+            <v-toolbar color="primary" dark flat class="mb-3">
                 <v-toolbar-title><v-icon>help</v-icon> Help</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn icon @click="$store.state.helpDialog = false">
+                    <v-icon>close</v-icon>
+                </v-btn>
             </v-toolbar>
-
-            <v-container fluid>
+            <v-card-text>
                 <v-expansion-panels accordion multiple hover>
                     <v-expansion-panel>
                         <v-expansion-panel-header>
@@ -80,7 +78,7 @@
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                 </v-expansion-panels>
-            </v-container>
+            </v-card-text>
         </v-card>
     </v-dialog>
 </template>

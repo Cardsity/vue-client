@@ -12,7 +12,11 @@
                         :indeterminate="true"
                     ></v-progress-linear>
 
-                    <v-form v-model="valid" v-on:submit.prevent="login">
+                    <v-form
+                        v-model="valid"
+                        @submit.prevent="login"
+                        @keyup.native.enter="valid && login()"
+                    >
                         <v-container>
                             <v-text-field
                                 label="Nickname"
@@ -40,7 +44,7 @@
                         <v-divider></v-divider>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn text @click="login" :disabled="sending">
+                            <v-btn text type="submit" :disabled="sending || !valid">
                                 Login
                                 <v-icon>send</v-icon>
                             </v-btn>

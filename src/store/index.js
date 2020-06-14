@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import router from '../router';
 import WebSocketAsPromised from 'websocket-as-promised';
 
-const SERVER_URL = `${window.location.host}:9012`;
+const SERVER_URL = `${window.location.hostname}:9012`;
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -171,8 +171,10 @@ export default new Vuex.Store({
                         icon: 'error',
                         duration: 1000,
                     });
-                    // fallback to lobby list (to fix invalid quick join links)
-                    router.push('/lobbyList');
+                    if (router.currentRoute.path !== '/lobbyList') {
+                        // fallback to lobby list (to fix invalid quick join links)
+                        router.push('/lobbyList');
+                    }
                 }
             });
         },

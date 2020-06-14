@@ -42,10 +42,9 @@ docker run -it -p 8080:8080 --rm --name cardsity-vue-client cardsity-vue-client
 - Write Tests
 - Cards with long text
 - Validate forms better
-- Press enter on forms
 - Focus text fields in dialogs
 - Remove console logs
-- Save card history as image (html2canvas + blob download)
 - Avoid scrolling when a chat message gets added
 - Save chat in store
 - Emoji picker in chat
+- Sounds
