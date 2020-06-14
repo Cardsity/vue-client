@@ -8,7 +8,7 @@
                 </p>
                 <p>
                     The connection to the server was closed. You can check if we have server problems
-                    <a href="#" target="_blank">here</a>
+                    <a href="https://twitter.com/CardsityApp" target="_blank">here</a>
                 </p>
             </v-card-text>
             <v-card-actions>
