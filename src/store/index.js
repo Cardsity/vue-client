@@ -54,6 +54,9 @@ export default new Vuex.Store({
         isCzar: state => {
             return state.loggedIn === state.currentLobby.czar.owner.id;
         },
+        inGame: state => {
+            return state.currentLobby && state.currentLobby.currentRound > 0;
+        },
     },
     mutations: {
         setConnection(state, connection) {

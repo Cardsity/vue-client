@@ -4,7 +4,7 @@
             <source src="../assets/sounds/draw-card.wav" type="audio/wav" />
         </audio>
         <WinnerDialog :winner="gameWinner" :players="players" :card-history="cardHistory"></WinnerDialog>
-        <InGame v-if="inGame" :lobby="lobby"></InGame>
+        <InGame v-if="$store.getters.inGame" :lobby="lobby"></InGame>
         <LobbyInfo v-else :lobby="lobby"></LobbyInfo>
     </div>
 </template>
@@ -24,9 +24,6 @@
         computed: {
             lobby() {
                 return this.$store.state.currentLobby;
-            },
-            inGame() {
-                return this.lobby.currentRound > 0;
             },
         },
         data() {

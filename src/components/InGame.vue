@@ -227,6 +227,7 @@
 
                     webSocket.sendRequest(jokerCardRequest).then(response => {
                         console.log('Joker card response message received', response);
+                        // TODO: selected cards get deleted
 
                         if (response.success) {
                             //
