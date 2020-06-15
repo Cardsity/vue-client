@@ -1,5 +1,8 @@
 <template>
     <div v-if="lobby">
+        <audio id="drawSound">
+            <source src="../assets/sounds/draw-card.wav" type="audio/wav" />
+        </audio>
         <WinnerDialog :winner="gameWinner" :players="players" :card-history="cardHistory"></WinnerDialog>
         <InGame v-if="inGame" :lobby="lobby"></InGame>
         <LobbyInfo v-else :lobby="lobby"></LobbyInfo>
@@ -90,6 +93,7 @@
                             'joker requests',
                             jokerRequestsRemaining
                         );
+                        const playCardDrawSound = newHand.length > this.$store.state.playerCards.length;
                         // this also resets the selected cards because we replace it
                         this.$store.state.playerCards = newHand;
                         if (!isCausedByJokerRequest) {
@@ -98,6 +102,13 @@
                             this.$store.state.cards = [];
                         }
                         this.$store.state.jokerRequestsRemaining = jokerRequestsRemaining;
+
+                        if (playCardDrawSound) {
+                            const drawSound = document.getElementById('drawSound');
+                            drawSound.currentTime = 0;
+                            drawSound.volume = 1;
+                            drawSound.play();
+                        }
                     }
                     if (unrevealedCardOwnerId) {
                         this.$store.state.cards.push({ text: '' });
@@ -116,9 +127,9 @@
                         // TODO: select the card which was selected randomly
                     }
                     if (winnerId) {
-                        this.$store.state.timer = 10 * 1000;
                         this.$store.state.czarPicked = winnerId;
                         this.$store.dispatch('selectWonCards', winnerId);
+                        this.$store.state.timer = 10 * 1000;
                     }
                     if (winner) {
                         console.log('(Lobby) Game winner', { winner, cardHistory });

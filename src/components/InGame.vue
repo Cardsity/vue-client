@@ -1,5 +1,8 @@
 <template>
     <div>
+        <audio id="clockSound" loop>
+            <source src="../assets/sounds/clock.wav" type="audio/wav" />
+        </audio>
         <v-row no-gutters align="start" justify="start" class="ml-3 mt-3" style="position: relative;">
             <!-- Black card -->
             <Card :black="true" :card="lobby.blackCard" :disabled="true"></Card>
@@ -164,11 +167,24 @@
         },
         methods: {
             startTimer() {
+                const clockSound = document.getElementById('clockSound');
                 this.timerInterval = window.setInterval(() => {
                     if (this.$store.state.timer > 0) {
                         this.$store.state.timer -= 1000;
                         this.timerPercent =
                             (this.$store.state.timer / this.$store.state.currentLobby.pickLimit) * 100;
+                        const clockTimer = 10000;
+                        if (
+                            this.$store.state.timer <= clockTimer &&
+                            clockSound.paused &&
+                            !this.$store.state.czarPicked
+                        ) {
+                            clockSound.currentTime = 0;
+                            clockSound.volume = 0.08;
+                            clockSound.play();
+                        } else if (this.$store.state.timer > clockTimer && !clockSound.paused) {
+                            clockSound.pause();
+                        }
                     }
                 }, 1000);
             },

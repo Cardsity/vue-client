@@ -121,6 +121,7 @@
                                     label="Password (optional)"
                                     type="password"
                                     outlined
+                                    :counter="16"
                                 ></v-text-field>
 
                                 <v-label>Official decks</v-label>
