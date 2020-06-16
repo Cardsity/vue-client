@@ -3,6 +3,15 @@
         <audio id="drawSound">
             <source src="../assets/sounds/draw-card.wav" type="audio/wav" />
         </audio>
+        <audio id="pointScoredSound">
+            <source src="../assets/sounds/point-scored.wav" type="audio/wav" />
+        </audio>
+        <audio id="gameWonSound">
+            <source src="../assets/sounds/game-won.wav" type="audio/wav" />
+        </audio>
+        <audio id="gameLostSound">
+            <source src="../assets/sounds/game-lost.wav" type="audio/wav" />
+        </audio>
         <WinnerDialog :winner="gameWinner" :players="players" :card-history="cardHistory"></WinnerDialog>
         <InGame v-if="$store.getters.inGame" :lobby="lobby"></InGame>
         <LobbyInfo v-else :lobby="lobby"></LobbyInfo>
@@ -126,11 +135,28 @@
                     if (winnerId) {
                         this.$store.state.czarPicked = winnerId;
                         this.$store.dispatch('selectWonCards', winnerId);
+                        if (winnerId === this.$store.state.loggedIn) {
+                            const pointScoredSound = document.getElementById('pointScoredSound');
+                            pointScoredSound.currentTime = 0;
+                            pointScoredSound.volume = 1;
+                            pointScoredSound.play();
+                        }
                         this.$store.state.timer = 10 * 1000;
                     }
                     if (winner) {
                         console.log('(Lobby) Game winner', { winner, cardHistory });
                         this.gameWinner = winner;
+                        if (winner.owner.id === this.$store.state.loggedIn) {
+                            const gameWonSound = document.getElementById('gameWonSound');
+                            gameWonSound.currentTime = 0;
+                            gameWonSound.volume = 1;
+                            gameWonSound.play();
+                        } else {
+                            const gameLostSound = document.getElementById('gameLostSound');
+                            gameLostSound.currentTime = 0;
+                            gameLostSound.volume = 1;
+                            gameLostSound.play();
+                        }
                         this.cardHistory = cardHistory;
                         // we need to copy it so it doesn't change when the lobby is reset
                         this.players = [...this.$store.state.currentLobby.players];

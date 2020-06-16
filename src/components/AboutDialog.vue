@@ -37,8 +37,32 @@
                     </li>
                     <li>
                         "playing_cards » draw-card.wav" by themfish of
-                        <a href="https://freesound.org/people/themfish/sounds/45813/" target="_blank"
-                            >Freesound.org
+                        <a href="https://freesound.org/people/themfish/sounds/45813/" target="_blank">
+                            Freesound.org
+                        </a>
+                    </li>
+                    <li>
+                        "Good!" by syseQ of
+                        <a href="https://freesound.org/people/syseQ/sounds/267528/" target="_blank">
+                            Freesound.org
+                        </a>
+                    </li>
+                    <li>
+                        "game over" by Leszek_Szary of
+                        <a
+                            href="https://freesound.org/people/Leszek_Szary/sounds/133283/"
+                            target="_blank"
+                        >
+                            Freesound.org
+                        </a>
+                    </li>
+                    <li>
+                        "level completed" by Leszek_Szary of
+                        <a
+                            href="https://freesound.org/people/Leszek_Szary/sounds/133284/"
+                            target="_blank"
+                        >
+                            Freesound.org
                         </a>
                     </li>
                 </ul>
