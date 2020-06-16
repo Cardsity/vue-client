@@ -15,7 +15,7 @@
                 <v-spacer></v-spacer>
                 <v-btn dark @click="reconnect" :disabled="$store.state.reconnecting">
                     Retry
-                    <v-icon>refresh</v-icon>
+                    <v-icon>mdi-refresh</v-icon>
                 </v-btn>
             </v-card-actions>
         </v-card>

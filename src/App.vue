@@ -11,30 +11,29 @@
 
             <v-spacer></v-spacer>
 
-            <!--TODO: Prompt when in game -->
             <v-btn icon @click="pressedNavigationButton" v-if="$route.name !== 'Login'">
-                <v-icon v-if="$route.name === 'Lobby'">home</v-icon>
-                <v-icon v-else-if="$route.name === 'Lobby List'">exit_to_app</v-icon>
-                <v-icon v-else>arrow_back</v-icon>
+                <v-icon v-if="$route.name === 'Lobby'">mdi-home</v-icon>
+                <v-icon v-else-if="$route.name === 'Lobby List'">mdi-exit-to-app</v-icon>
+                <v-icon v-else>mdi-arrow-left</v-icon>
             </v-btn>
 
             <v-menu left bottom>
                 <template v-slot:activator="{ on }">
                     <v-btn icon v-on="on">
-                        <v-icon>more_vert</v-icon>
+                        <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                 </template>
 
                 <v-list>
                     <v-list-item @click="$store.state.aboutDialog = true">
                         <v-list-item-title>
-                            <v-icon>info</v-icon>
+                            <v-icon>mdi-information</v-icon>
                             About
                         </v-list-item-title>
                     </v-list-item>
                     <v-list-item @click="$store.state.helpDialog = true">
                         <v-list-item-title>
-                            <v-icon>help</v-icon>
+                            <v-icon>mdi-help-circle</v-icon>
                             Help
                         </v-list-item-title>
                     </v-list-item>
@@ -58,14 +57,14 @@
             </span>
             <v-spacer></v-spacer>
             <v-btn icon>
-                <v-icon>report_problem</v-icon>
+                <v-icon>mdi-alert</v-icon>
             </v-btn>
             <v-btn icon @click="$store.state.shareDialog = true">
-                <v-icon>share</v-icon>
+                <v-icon>mdi-share-variant</v-icon>
             </v-btn>
             <v-btn icon @click="toggleDarkTheme">
-                <v-icon v-if="$vuetify.theme.dark">toggle_on</v-icon>
-                <v-icon v-else>toggle_off</v-icon>
+                <v-icon v-if="$vuetify.theme.dark">mdi-toggle-switch</v-icon>
+                <v-icon v-else>mdi-toggle-switch-off</v-icon>
             </v-btn>
         </v-footer>
     </v-app>
@@ -116,7 +115,7 @@
                         } else {
                             console.error(response);
                             this.$toasted.show(response.message, {
-                                icon: 'error',
+                                icon: 'mdi-alert-circle',
                                 duration: 1000,
                             });
                         }

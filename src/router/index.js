@@ -9,7 +9,6 @@ const routes = [
         path: '/',
         name: 'Home',
         redirect: () => {
-            console.log('loggedIn', store.state.loggedIn);
             return store.state.loggedIn ? '/lobbyList' : '/login';
         },
     },

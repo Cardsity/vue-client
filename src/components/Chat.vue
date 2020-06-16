@@ -8,10 +8,10 @@
             >
                 <div class="font-weight-bold" v-if="item.sender.id === $store.state.loggedIn">
                     {{ item.sender.name }}
-                    <v-icon :color="item.sender.color">account_circle</v-icon>
+                    <v-icon :color="item.sender.color">mdi-account-circle</v-icon>
                 </div>
                 <div class="font-weight-bold" v-else>
-                    <v-icon :color="item.sender.color">account_circle</v-icon>
+                    <v-icon :color="item.sender.color">mdi-account-circle</v-icon>
                     {{ item.sender.name }}
                 </div>
 
@@ -33,7 +33,7 @@
                 single-line
                 :counter="64"
                 dense
-                append-icon="send"
+                append-icon="mdi-send"
                 v-model="chatMessage"
                 :loading="loading"
                 :disabled="loading"
@@ -110,7 +110,7 @@
                     } else {
                         console.error(response);
                         this.$toasted.show(response.message, {
-                            icon: 'error',
+                            icon: 'mdi-alert-circle',
                             duration: 1000,
                         });
                     }

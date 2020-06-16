@@ -45,7 +45,7 @@
                         $store.state.currentLobby.blackCard.blanks
                 "
             >
-                <v-icon>send</v-icon>
+                <v-icon>mdi-send</v-icon>
                 Submit selected cards
             </v-btn>
         </v-row>
@@ -81,7 +81,7 @@
                             @click="showJokerRequestDialog"
                             :disabled="$store.state.sentCards || !$store.state.jokerRequestsRemaining"
                         >
-                            <v-icon>library_add</v-icon>
+                            <v-icon>mdi-plus-box-multiple</v-icon>
                             Request joker card ({{ $store.state.jokerRequestsRemaining }}
                             remaining)
                         </v-btn>
@@ -98,7 +98,7 @@
                                             label="Text"
                                             required
                                             type="text"
-                                            prepend-inner-icon="library_add"
+                                            prepend-inner-icon="mdi-plus-box-multiple"
                                             v-model="jokerRequestText"
                                             clearable
                                             @keyup.native.enter="requestJokerCard"
@@ -115,7 +115,7 @@
                                             @click="requestJokerCard"
                                         >
                                             Send
-                                            <v-icon>arrow_right</v-icon>
+                                            <v-icon>mdi-arrow-right</v-icon>
                                         </v-btn>
                                     </v-card-actions>
                                 </v-card>
@@ -204,7 +204,7 @@
                     } else {
                         console.error('Card play request failed');
                         this.$toasted.show(response.message, {
-                            icon: 'error',
+                            icon: 'mdi-alert-circle',
                             duration: 1000,
                         });
                     }
@@ -234,7 +234,7 @@
                         } else {
                             console.error('Joker card request failed');
                             this.$toasted.show(response.message, {
-                                icon: 'error',
+                                icon: 'mdi-alert-circle',
                                 duration: 1000,
                             });
                         }

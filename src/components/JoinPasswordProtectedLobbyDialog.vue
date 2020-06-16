@@ -3,11 +3,11 @@
         <v-card>
             <v-card-title class="text-h5">
                 <span class="text-h5">
-                    This lobby is password protected!
+                    <v-icon color="red">mdi-lock-question</v-icon> This lobby is password protected!
                 </span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="$store.state.passwordDialog = false">
-                    <v-icon>close</v-icon>
+                    <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-card-title>
 
@@ -23,7 +23,7 @@
                         label="Password"
                         required
                         type="password"
-                        prepend-inner-icon="lock"
+                        prepend-inner-icon="mdi-lock"
                         v-model="password"
                         :loading="$store.state.joinLoading"
                         :disabled="$store.state.joinLoading"
@@ -43,7 +43,7 @@
                     @click="joinPasswordLobby"
                 >
                     Join
-                    <v-icon>arrow_right</v-icon>
+                    <v-icon>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
         </v-card>

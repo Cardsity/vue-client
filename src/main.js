@@ -11,6 +11,7 @@ Vue.config.productionTip = false;
 
 Vue.use(Toasted, {
     theme: 'toasted-primary',
+    iconPack: 'mdi',
     position: 'bottom-right',
     className: 'notification',
 });

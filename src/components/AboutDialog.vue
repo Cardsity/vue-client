@@ -3,28 +3,32 @@
         <v-card>
             <v-card-title>
                 <div class="text-h5">
-                    <v-icon>info</v-icon>
-                    <span>Cards Against Humanity</span>
-                    <span class="text-caption">
+                    <v-icon>mdi-information</v-icon>
+                    <span>Cardsity</span>
+                    <br />
+                    <span class="text-h6">
                         Vue client, version 0.1
                     </span>
                 </div>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="$store.state.aboutDialog = false">
-                    <v-icon>close</v-icon>
+                    <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-card-title>
             <v-card-text>
                 <p class="text-h5">Open source licenses</p>
-                <ul class="grid-list-lg">
+                <ul>
                     <li v-for="license in licenses" :key="license.name">
-                        {{ license.name }} (<a v-bind:href="license.link" target="_blank"
-                            >{{ license.link }} </a
-                        >)
+                        {{ license.name }}
+                        (
+                        <a v-bind:href="license.link" target="_blank">
+                            {{ license.link }}
+                        </a>
+                        )
                     </li>
                 </ul>
                 <p class="text-h5">Sounds</p>
-                <ul class="grid-list-lg">
+                <ul>
                     <li>
                         "Ticking Clock, A.wav" by InspectorJ of
                         <a href="https://freesound.org/people/InspectorJ/sounds/343130/" target="_blank"
@@ -45,6 +49,7 @@
 
 <script>
     export default {
+        // TODO: include a copy of the license
         name: 'AboutDialog',
         data() {
             return {

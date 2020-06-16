@@ -11,7 +11,7 @@
                         label="Reason"
                         required
                         type="text"
-                        prepend-inner-icon="gavel"
+                        prepend-inner-icon="mdi-gavel"
                         v-model="kickReason"
                         clearable
                         solo
@@ -22,7 +22,7 @@
                     <v-spacer></v-spacer>
                     <v-btn color="primary darken-1" text outlined @click="kickPlayer()">
                         Kick
-                        <v-icon>arrow_right</v-icon>
+                        <v-icon>mdi-arrow-right</v-icon>
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -32,7 +32,7 @@
         <v-list-item v-for="(player, i) in lobby.players" :key="i">
             <v-list-item-content>
                 <v-list-item-title :style="`color: ${player.owner.color};`">
-                    <v-icon :color="player.owner.color">account_circle</v-icon>
+                    <v-icon :color="player.owner.color">mdi-account-circle</v-icon>
                     {{ player.owner.name }}
                     <v-chip v-if="$store.getters.inGame" color="secondary" class="mr-1"
                         >{{ player.points }} Points</v-chip
@@ -52,7 +52,7 @@
                                 v-on="on"
                                 @click="showKickDialog(player)"
                             >
-                                <v-icon>gavel</v-icon>
+                                <v-icon>mdi-gavel</v-icon>
                             </v-btn>
                         </template>
                         <span>Kick player</span>
@@ -65,6 +65,7 @@
 
 <script>
     export default {
+        // TODO: crown on the best player
         name: 'PlayerList',
         props: ['lobby'],
         data() {
@@ -95,13 +96,13 @@
 
                     if (response.success) {
                         this.$toasted.show(response.message, {
-                            icon: 'info',
+                            icon: 'mdi-information',
                             duration: 2500,
                         });
                     } else {
                         console.error(response);
                         this.$toasted.show(response.message, {
-                            icon: 'error',
+                            icon: 'mdi-alert-circle',
                             duration: 1000,
                         });
                     }

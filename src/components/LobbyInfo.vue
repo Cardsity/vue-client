@@ -10,7 +10,7 @@
                     @click="$store.state.createDialog = true"
                     icon
                 >
-                    <v-icon>edit</v-icon>
+                    <v-icon>mdi-pencil</v-icon>
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-btn
@@ -20,7 +20,7 @@
                     v-if="$store.getters.isHost"
                     @click="startGame"
                 >
-                    <v-icon>launch</v-icon>
+                    <v-icon>mdi-launch</v-icon>
                     Start game
                 </v-btn>
             </v-card-title>
@@ -66,7 +66,7 @@
                     </v-chip>
                 </p>
                 <v-btn color="accent" @click="copyQuickJoinLink">
-                    <v-icon>link</v-icon>
+                    <v-icon>mdi-link</v-icon>
                     Copy quick join link
                 </v-btn>
             </v-card-text>
@@ -107,13 +107,13 @@
 
                     if (response.success) {
                         this.$toasted.show(response.message, {
-                            icon: 'info',
+                            icon: 'mdi-information',
                             duration: 2500,
                         });
                     } else {
                         console.error(response);
                         this.$toasted.show(response.message, {
-                            icon: 'error',
+                            icon: 'mdi-alert-circle',
                             duration: 1000,
                         });
                     }
@@ -135,12 +135,12 @@
                 const successful = document.execCommand('copy');
                 if (successful) {
                     this.$toasted.show('Successfully copied to clipboard', {
-                        icon: 'info',
+                        icon: 'mdi-information',
                         duration: 2500,
                     });
                 } else {
                     this.$toasted.show('Failed copying to clipboard', {
-                        icon: 'error',
+                        icon: 'mdi-alert-circle',
                         duration: 1000,
                     });
                 }

@@ -4,24 +4,17 @@
             <v-card elevation="5">
                 <v-card-title>
                     <v-btn icon @click="loadLobbies" :disabled="lobbiesLoading">
-                        <v-icon>refresh</v-icon>
+                        <v-icon>mdi-refresh</v-icon>
                     </v-btn>
                     Currently available lobbies
                     <v-spacer></v-spacer>
-                    <v-text-field
-                        v-model="search"
-                        prepend-inner-icon="search"
-                        label="Search"
-                        single-line
-                        hide-details
-                    ></v-text-field>
                     <v-btn
                         color="primary"
                         outlined
                         class="mb-2"
                         @click="$store.state.createDialog = true"
                     >
-                        <v-icon>add</v-icon>
+                        <v-icon>mdi-plus</v-icon>
                         Create lobby
                     </v-btn>
                 </v-card-title>
@@ -34,8 +27,8 @@
                     :loading="lobbiesLoading"
                 >
                     <template v-slot:item.password="{ item }">
-                        <v-icon v-if="item.password" color="error">lock</v-icon>
-                        <v-icon v-else color="success">lock_open</v-icon>
+                        <v-icon v-if="item.password" color="error">mdi-lock</v-icon>
+                        <v-icon v-else color="success">mdi-lock-open</v-icon>
                     </template>
 
                     <template v-slot:item.join="{ item }">
@@ -46,7 +39,7 @@
                             x-small
                             @click.stop="$store.dispatch('joinLobby', item)"
                         >
-                            <v-icon>arrow_right_alt</v-icon>
+                            <v-icon>mdi-arrow-right</v-icon>
                         </v-btn>
                     </template>
                 </v-data-table>
@@ -69,7 +62,6 @@
                 // State
                 lobbiesLoading: false,
                 // Table
-                search: '',
                 //TODO: default sort by id
                 tableOptions: {},
                 totalLobbies: 0,
@@ -150,7 +142,7 @@
                     } else {
                         console.error(response);
                         this.$toasted.show(response.message, {
-                            icon: 'error',
+                            icon: 'mdi-alert-circle',
                             duration: 1000,
                         });
                     }

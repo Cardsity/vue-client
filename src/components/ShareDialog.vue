@@ -5,7 +5,7 @@
                 <span class="title font-weight-bold">Share</span>
                 <v-spacer></v-spacer>
                 <v-btn class="mx-0" icon @click="$store.state.shareDialog = false">
-                    <v-icon>cancel</v-icon>
+                    <v-icon>mdi-close-circle</v-icon>
                 </v-btn>
             </v-card-title>
             <v-text-field

@@ -2,7 +2,7 @@
     <v-dialog persistent scrollable v-model="$store.state.winnerDialog" v-if="winner && players">
         <v-card>
             <v-toolbar color="primary" dark flat>
-                <v-icon>emoji_events</v-icon>
+                <v-icon>mdi-trophy</v-icon>
                 <v-spacer></v-spacer>
                 <v-card-title>
                     Game ended!
@@ -11,13 +11,13 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon @click="saveAsImage" v-bind="attrs" v-on="on">
-                            <v-icon>save</v-icon>
+                            <v-icon>mdi-content-save</v-icon>
                         </v-btn>
                     </template>
                     <span>Save card history</span>
                 </v-tooltip>
                 <v-btn icon @click="$store.state.winnerDialog = false">
-                    <v-icon>close</v-icon>
+                    <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-toolbar>
             <v-card-text>
@@ -27,7 +27,7 @@
                 <v-list-item>
                     <v-list-item-icon>
                         <v-icon :color="winner.owner.color">
-                            account_circle
+                            mdi-account-circle
                         </v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
@@ -45,14 +45,14 @@
                     <v-list-item v-for="(player, index) in sortedPlayers" :key="index">
                         <v-list-item-icon>
                             <v-icon :color="player.owner.color">
-                                account_circle
+                                mdi-account-circle
                             </v-icon>
                         </v-list-item-icon>
                         <v-list-item-content>
                             <v-list-item-title>
                                 {{ player.owner.name }}
                                 <v-icon color="orange" v-if="player.owner.id === winner.owner.id">
-                                    emoji_events
+                                    mdi-trophy
                                 </v-icon>
                             </v-list-item-title>
                             <v-list-item-subtitle>
@@ -67,7 +67,7 @@
                     <v-timeline-item
                         v-for="(played, i) in cardHistory"
                         :key="i"
-                        icon="account_circle"
+                        icon="mdi-account-circle"
                         :color="played[0].color"
                         fill-dot
                         large

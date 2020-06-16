@@ -65,7 +65,7 @@
                         this.$toasted.show(
                             'You were kicked: ' + (kickReason ? kickReason : 'No message given'),
                             {
-                                icon: 'gavel',
+                                icon: 'mdi-gavel',
                                 duration: 7500,
                             }
                         );

@@ -79,7 +79,6 @@ export default new Vuex.Store({
         /**
          * Connect to the websocket server
          *
-         * @param state
          * @param context
          */
         connect({ state, commit }) {
@@ -93,19 +92,21 @@ export default new Vuex.Store({
                 timeout: 0,
             });
 
-            // TODO: connect websocket when logging in!!!!
             webSocket
                 .open()
                 .then(() => {
                     console.log('Successfully connected to the websocket server');
                 })
-                .catch(() => {
+                .catch(error => {
                     commit('setConnectionClosed', true);
+                    console.error('Failed connecting to websocket server', error);
                 });
             commit('setConnection', webSocket);
 
             webSocket.onClose.addListener(event => {
-                console.log('Websocket connection closed', event);
+                // TODO: reconnect because closed abnormally (locally) by the browser implementation.
+                // https://stackoverflow.com/questions/19304157/getting-the-reason-why-websockets-closed-with-close-code-1006
+                console.error('Websocket connection closed', event);
                 commit('setConnectionClosed', true);
                 commit('setLoggedIn', null);
                 commit('setCurrentLobby', null);
@@ -161,17 +162,17 @@ export default new Vuex.Store({
             console.log('Sending', joinRequest);
             webSocket.sendRequest(joinRequest).then(response => {
                 state.joinLoading = false;
-                state.passwordDialog = false;
                 console.log('Join response message received', response);
 
                 if (response.success) {
+                    state.passwordDialog = false;
                     console.log('successfully joined');
                     commit('setCurrentLobby', response);
                     router.push(`/lobby`);
                 } else {
                     console.error(response);
                     Vue.toasted.show(response.message, {
-                        icon: 'error',
+                        icon: 'mdi-alert-circle',
                         duration: 1000,
                     });
                     if (router.currentRoute.path !== '/lobbyList') {
@@ -199,7 +200,7 @@ export default new Vuex.Store({
                 } else {
                     console.error(response);
                     this.$toasted.show(response.message, {
-                        icon: 'error',
+                        icon: 'mdi-alert-circle',
                         duration: 1000,
                     });
                 }

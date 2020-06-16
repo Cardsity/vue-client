@@ -2,10 +2,10 @@
     <v-dialog scrollable v-model="$store.state.helpDialog" max-width="850">
         <v-card class="mx-auto" elevation="12" outlined>
             <v-toolbar color="primary" dark flat class="mb-3">
-                <v-toolbar-title><v-icon>help</v-icon> Help</v-toolbar-title>
+                <v-toolbar-title><v-icon>mdi-help-circle</v-icon> Help</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="$store.state.helpDialog = false">
-                    <v-icon>close</v-icon>
+                    <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-toolbar>
             <v-card-text>

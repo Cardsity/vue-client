@@ -1,25 +1,34 @@
 <template>
-    <v-dialog v-model="$store.state.createDialog" scrollable persistent max-width="700px">
+    <v-dialog v-model="$store.state.createDialog" scrollable persistent max-width="1000px">
         <v-form>
             <v-card :loading="$store.state.joinLoading">
                 <v-card-title>
                     <span class="text-h5" v-if="lobby">
-                        <v-icon>edit</v-icon>
+                        <v-icon>mdi-edit</v-icon>
                         Edit Lobby
                     </span>
                     <span class="text-h5" v-else>
-                        <v-icon>add_circle</v-icon>
+                        <v-icon>mdi-plus-circle</v-icon>
                         Create Lobby
                     </span>
                     <v-spacer></v-spacer>
                     <v-btn icon @click="$store.state.createDialog = false">
-                        <v-icon>close</v-icon>
+                        <v-icon>mdi-close</v-icon>
                     </v-btn>
                 </v-card-title>
                 <v-card-text>
-                    <v-container>
-                        <v-row>
-                            <v-col cols="12">
+                    <v-expansion-panels
+                        v-model="settingsAccordionOpened"
+                        class="elevation-8"
+                        accordion
+                        multiple
+                        hover
+                    >
+                        <v-expansion-panel>
+                            <v-expansion-panel-header>
+                                General Settings
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content>
                                 <v-text-field
                                     :disabled="$store.state.joinLoading || !!lobby"
                                     label="Name"
@@ -27,93 +36,9 @@
                                     required
                                     dense
                                     outlined
+                                    append-icon="mdi-text-subject"
                                     :counter="16"
                                 ></v-text-field>
-                                <v-slider
-                                    :disabled="$store.state.joinLoading"
-                                    v-model="creatingLobby.maxPlayers"
-                                    label="Max players"
-                                    step="1"
-                                    dense
-                                    min="3"
-                                    max="15"
-                                    ticks="always"
-                                    required
-                                >
-                                    <template v-slot:append>
-                                        <v-label class="mt-0 pt-0">
-                                            {{ creatingLobby.maxPlayers }}
-                                        </v-label>
-                                    </template>
-                                </v-slider>
-                                <v-slider
-                                    :disabled="$store.state.joinLoading"
-                                    v-model="creatingLobby.maxPoints"
-                                    label="Score limit"
-                                    step="1"
-                                    dense
-                                    min="5"
-                                    max="25"
-                                    ticks="always"
-                                    required
-                                >
-                                    <template v-slot:append>
-                                        <v-label class="mt-0 pt-0">
-                                            {{ creatingLobby.maxPoints }}
-                                        </v-label>
-                                    </template>
-                                </v-slider>
-                                <v-slider
-                                    :disabled="$store.state.joinLoading"
-                                    v-model="creatingLobby.pickLimit"
-                                    label="Card pick time limit (minutes)"
-                                    step="0.5"
-                                    dense
-                                    min="0.5"
-                                    max="5"
-                                    ticks="always"
-                                    required
-                                >
-                                    <template v-slot:append>
-                                        <v-label class="mt-0 pt-0">
-                                            {{ creatingLobby.pickLimit }}
-                                        </v-label>
-                                    </template>
-                                </v-slider>
-                                <v-slider
-                                    :disabled="$store.state.joinLoading"
-                                    v-model="creatingLobby.maxRounds"
-                                    label="Rounds"
-                                    step="1"
-                                    dense
-                                    min="5"
-                                    max="20"
-                                    ticks="always"
-                                    required
-                                >
-                                    <template v-slot:append>
-                                        <v-label class="mt-0 pt-0">
-                                            {{ creatingLobby.maxRounds }}
-                                        </v-label>
-                                    </template>
-                                </v-slider>
-                                <v-slider
-                                    :disabled="$store.state.joinLoading"
-                                    v-model="creatingLobby.maxJokerRequests"
-                                    label="Max joker requests"
-                                    step="1"
-                                    dense
-                                    min="0"
-                                    max="10"
-                                    ticks="always"
-                                    required
-                                >
-                                    <template v-slot:append>
-                                        <v-label class="mt-0 pt-0">
-                                            {{ creatingLobby.maxJokerRequests }}
-                                        </v-label>
-                                    </template>
-                                </v-slider>
                                 <v-text-field
                                     :disabled="$store.state.joinLoading"
                                     v-model="creatingLobby.password"
@@ -121,10 +46,36 @@
                                     label="Password (optional)"
                                     type="password"
                                     outlined
+                                    clearable
+                                    append-icon="mdi-lock"
                                     :counter="16"
                                 ></v-text-field>
 
-                                <v-label>Official decks</v-label>
+                                <v-row>
+                                    <v-col>
+                                        <v-slider
+                                            :disabled="$store.state.joinLoading"
+                                            v-model="creatingLobby.maxPlayers"
+                                            label="Max players"
+                                            step="1"
+                                            dense
+                                            min="3"
+                                            max="15"
+                                            ticks="always"
+                                            thumb-label="always"
+                                            required
+                                        >
+                                        </v-slider>
+                                    </v-col>
+                                </v-row>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                        <v-expansion-panel>
+                            <v-expansion-panel-header>
+                                Deck Settings
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <span><v-icon>mdi-check-decagram</v-icon> Official decks</span>
                                 <v-chip-group
                                     multiple
                                     column
@@ -158,13 +109,148 @@
                                     small-chips
                                     deletable-chips
                                     item-text="name"
-                                    label="Custom decks"
+                                    label="Search custom decks"
+                                    append-icon="mdi-magnify"
                                     multiple
                                     required
                                 ></v-autocomplete>
-                            </v-col>
-                        </v-row>
-                    </v-container>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                        <v-expansion-panel>
+                            <v-expansion-panel-header>
+                                Game Settings
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <v-row>
+                                    <v-col>
+                                        <p>Score limit</p>
+                                    </v-col>
+                                    <v-col cols="10">
+                                        <v-slider
+                                            :disabled="$store.state.joinLoading"
+                                            v-model="creatingLobby.maxPoints"
+                                            step="1"
+                                            dense
+                                            min="5"
+                                            max="25"
+                                            ticks="always"
+                                            thumb-label="always"
+                                            required
+                                        >
+                                        </v-slider>
+                                    </v-col>
+                                </v-row>
+
+                                <v-row>
+                                    <v-col>
+                                        <p>Card pick time limit (minutes)</p>
+                                    </v-col>
+                                    <v-col cols="10">
+                                        <v-slider
+                                            :disabled="$store.state.joinLoading"
+                                            v-model="creatingLobby.pickLimit"
+                                            step="0.5"
+                                            dense
+                                            min="0.5"
+                                            max="5"
+                                            ticks="always"
+                                            thumb-label="always"
+                                            required
+                                        >
+                                        </v-slider>
+                                    </v-col>
+                                </v-row>
+
+                                <v-row>
+                                    <v-col>
+                                        <p>Rounds</p>
+                                    </v-col>
+                                    <v-col cols="10">
+                                        <v-slider
+                                            :disabled="$store.state.joinLoading"
+                                            v-model="creatingLobby.maxRounds"
+                                            step="1"
+                                            dense
+                                            min="5"
+                                            max="20"
+                                            ticks="always"
+                                            thumb-label="always"
+                                            required
+                                        >
+                                        </v-slider>
+                                    </v-col>
+                                </v-row>
+
+                                <v-row>
+                                    <v-col>
+                                        <p>Max joker requests</p>
+                                    </v-col>
+                                    <v-col cols="10">
+                                        <v-slider
+                                            :disabled="$store.state.joinLoading"
+                                            v-model="creatingLobby.maxJokerRequests"
+                                            step="1"
+                                            dense
+                                            min="0"
+                                            max="10"
+                                            ticks="always"
+                                            thumb-label="always"
+                                            required
+                                        >
+                                        </v-slider>
+                                    </v-col>
+                                </v-row>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                        <v-expansion-panel disabled>
+                            <v-expansion-panel-header>
+                                Special Settings
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <v-list two-line subheader flat>
+                                    <v-list-item-group multiple active-class="">
+                                        <v-list-item v-model="creatingLobby.winnerBecomesCzar">
+                                            <template v-slot:default="{ active }">
+                                                <v-list-item-action>
+                                                    <v-checkbox
+                                                        :input-value="active"
+                                                        color="primary"
+                                                    ></v-checkbox>
+                                                </v-list-item-action>
+
+                                                <v-list-item-content>
+                                                    <v-list-item-title>Winner Czar</v-list-item-title>
+                                                    <v-list-item-subtitle>
+                                                        The round winner becomes the next czar
+                                                    </v-list-item-subtitle>
+                                                </v-list-item-content>
+                                            </template>
+                                        </v-list-item>
+                                        <v-list-item v-model="creatingLobby.addJokerCardsToGame">
+                                            <template v-slot:default="{ active }">
+                                                <v-list-item-action>
+                                                    <v-checkbox
+                                                        :input-value="active"
+                                                        color="primary"
+                                                    ></v-checkbox>
+                                                </v-list-item-action>
+
+                                                <v-list-item-content>
+                                                    <v-list-item-title>
+                                                        Add joker cards to game
+                                                    </v-list-item-title>
+                                                    <v-list-item-subtitle>
+                                                        Add requested joker cards to the deck of the
+                                                        current game
+                                                    </v-list-item-subtitle>
+                                                </v-list-item-content>
+                                            </template>
+                                        </v-list-item>
+                                    </v-list-item-group>
+                                </v-list>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
@@ -172,19 +258,23 @@
                         color="success darken-1"
                         :disabled="$store.state.joinLoading"
                         text
+                        outlined
                         @click="editLobby"
                         v-if="lobby"
                     >
                         Edit
+                        <v-icon>mdi-pencil</v-icon>
                     </v-btn>
                     <v-btn
                         color="success darken-1"
                         :disabled="$store.state.joinLoading"
                         text
+                        outlined
                         @click="createLobby"
                         v-else
                     >
                         Create
+                        <v-icon>mdi-plus</v-icon>
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -202,13 +292,16 @@
                 // TODO: for create: reset on open to defaults
                 creatingLobby: {
                     name: '',
+                    password: '',
                     maxPoints: 10,
                     maxPlayers: 10,
                     pickLimit: 1,
                     maxRounds: 10,
                     maxJokerRequests: 2,
-                    password: '',
+                    winnerBecomesCzar: false,
+                    addJokerCardsToGame: false,
                 },
+                settingsAccordionOpened: [0, 1],
                 settingCustomDecks: [],
                 settingOfficialDeckIds: [],
                 // autocomplete
@@ -226,12 +319,12 @@
                 this.creatingLobby.pickLimit /= 1000 * 60;
             }
 
-            // TODO: replace
-            const decksUrl = `https://decks.cardsity.app/deck/list/json/`;
-            const response = await fetch(decksUrl);
-            console.log('(Create/Edit Lobby) official decks response', response);
-            const decks = await response.json();
-            if (decks) {
+            try {
+                // TODO: replace
+                const decksUrl = `https://decks.cardsity.app/deck/list/json/`;
+                const response = await fetch(decksUrl);
+                console.log('(Create/Edit Lobby) official decks response', response);
+                const decks = await response.json();
                 const officialDecks = decks.decks
                     .filter(x => x.official)
                     .sort((x1, x2) => x1.id - x2.id);
@@ -257,8 +350,14 @@
                         }
                     });
                 }
+            } catch (e) {
+                // TODO: show error when it failed
+                console.error(e);
+                this.$toasted.show(e, {
+                    icon: 'mdi-alert-circle',
+                    duration: 1000,
+                });
             }
-            // TODO: show error when it failed
         },
         watch: {
             async deckSearch(val) {
@@ -334,7 +433,7 @@
                     } else {
                         console.error(response);
                         this.$toasted.show(response.message, {
-                            icon: 'error',
+                            icon: 'mdi-alert-circle',
                             duration: 1000,
                         });
                     }
@@ -368,13 +467,13 @@
                     if (response.success) {
                         this.$store.state.createDialog = false;
                         this.$toasted.show(response.message, {
-                            icon: 'info',
+                            icon: 'mdi-information',
                             duration: 2500,
                         });
                     } else {
                         console.error(response);
                         this.$toasted.show(response.message, {
-                            icon: 'error',
+                            icon: 'mdi-alert-circle',
                             duration: 1000,
                         });
                     }

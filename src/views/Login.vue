@@ -4,7 +4,7 @@
             <v-col cols="12" sm="8" md="4">
                 <v-card class="mx-auto" max-width="500" outlined>
                     <v-toolbar color="primary" dark flat>
-                        <v-toolbar-title><v-icon>account_circle</v-icon> Login</v-toolbar-title>
+                        <v-toolbar-title><v-icon>mdi-account-circle</v-icon> Login</v-toolbar-title>
                     </v-toolbar>
                     <v-progress-linear
                         v-if="sending"
@@ -21,7 +21,7 @@
                             <v-text-field
                                 label="Nickname"
                                 v-model="nickname"
-                                prepend-inner-icon="person"
+                                prepend-inner-icon="mdi-account"
                                 hint="A name so other players can identify you"
                                 :counter="16"
                                 :disabled="sending"
@@ -46,7 +46,7 @@
                             <v-spacer></v-spacer>
                             <v-btn text type="submit" :disabled="sending || !valid">
                                 Login
-                                <v-icon>send</v-icon>
+                                <v-icon>mdi-send</v-icon>
                             </v-btn>
                         </v-card-actions>
                     </v-form>
@@ -145,7 +145,7 @@
                     } else {
                         console.error(response);
                         this.$toasted.show(response.message, {
-                            icon: 'error',
+                            icon: 'mdi-alert-circle',
                             duration: 1000,
                         });
                     }

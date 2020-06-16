@@ -85,7 +85,7 @@
                             } else {
                                 console.error(response);
                                 this.$toasted.show(response.message, {
-                                    icon: 'error',
+                                    icon: 'mdi-alert-circle',
                                     duration: 1000,
                                 });
                             }
