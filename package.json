@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Web client for the Cards Against Humanity clone Cardsity",
   "license": "GPL-3.0-or-later",
-  "homepage": "https://github.com/Cardsity",
+  "homepage": "https://cardsity.app",
   "repository": {
     "type": "git",
     "url": "https://github.com/Cardsity/vue-client.git"

@@ -14,13 +14,14 @@
                         prepend-inner-icon="mdi-gavel"
                         v-model="kickReason"
                         clearable
+                        @keyup.native.enter="kickPlayer"
                         solo
                     ></v-text-field>
                 </v-card-text>
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary darken-1" text outlined @click="kickPlayer()">
+                    <v-btn color="primary darken-1" text outlined @click="kickPlayer">
                         Kick
                         <v-icon>mdi-arrow-right</v-icon>
                     </v-btn>

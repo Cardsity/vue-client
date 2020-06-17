@@ -27,6 +27,7 @@
                         v-model="password"
                         :loading="$store.state.joinLoading"
                         :disabled="$store.state.joinLoading"
+                        @keyup.native.enter="joinPasswordLobby"
                         clearable
                         solo
                     ></v-text-field>

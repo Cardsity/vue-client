@@ -49,7 +49,7 @@
             <ShareDialog></ShareDialog>
             <router-view />
             <v-snackbar v-model="$store.state.updateAvailable" :timeout="-1" bottom right>
-                New version available test!
+                New version available!
                 <template v-slot:action="{ attrs }">
                     <v-btn v-bind="attrs" dark text color="green" @click="refreshApp">
                         Refresh
