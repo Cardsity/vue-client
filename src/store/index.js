@@ -8,6 +8,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        // App
+        updateAvailable: false,
         // Connection
         connection: null,
         connectionClosed: false,

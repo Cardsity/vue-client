@@ -48,6 +48,17 @@
             <ConnectionClosedDialog></ConnectionClosedDialog>
             <ShareDialog></ShareDialog>
             <router-view />
+            <v-snackbar v-model="$store.state.updateAvailable" :timeout="-1" bottom right>
+                New version available test!
+                <template v-slot:action="{ attrs }">
+                    <v-btn v-bind="attrs" dark text color="green" @click="refreshApp">
+                        Refresh
+                    </v-btn>
+                    <v-btn icon v-bind="attrs" @click="$store.state.updateAvailable = false">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </template>
+            </v-snackbar>
         </v-main>
 
         <v-footer app>
@@ -90,6 +101,10 @@
             this.$store.dispatch('connect');
         },
         methods: {
+            refreshApp() {
+                this.$store.state.updateAvailable = false;
+                window.location.reload();
+            },
             toggleDarkTheme() {
                 const darkScheme = !this.$vuetify.theme.dark;
                 this.$vuetify.theme.dark = darkScheme;

@@ -3,7 +3,10 @@ module.exports = {
 
     pwa: {
         name: 'Cardsity',
-        // TODO
+        workboxOptions: {
+            skipWaiting: true,
+        },
+        // TODO: colors and icon
         themeColor: '#4dba87',
         msTileColor: '#000000',
         appleMobileWebAppCapable: 'yes',
