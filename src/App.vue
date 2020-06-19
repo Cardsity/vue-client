@@ -147,4 +147,8 @@
     .notification {
         font-family: Roboto, sans-serif;
     }
+    html,
+    body {
+        overscroll-behavior-y: contain;
+    }
 </style>
