@@ -68,7 +68,21 @@
                     } = data;
 
                     if (decks) {
+                        // Game update
+                        console.log('(Lobby) Game Update', data);
                         this.$store.commit('setCurrentLobby', data);
+                        for (let i = 0; i < this.$store.state.cards.length; i++) {
+                            const card = this.$store.state.cards[i];
+                            if (card) {
+                                const player = data.players.find(
+                                    player => card.ownerId === player.owner.id
+                                );
+                                if (!player) {
+                                    // remove card from player because he left
+                                    this.$store.state.cards.splice(i, 1);
+                                }
+                            }
+                        }
                     }
                     if (kickReason || kickReason === '') {
                         this.$toasted.show(

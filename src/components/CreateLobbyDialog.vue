@@ -209,11 +209,15 @@
                             <v-expansion-panel-content>
                                 <v-list two-line subheader flat>
                                     <v-list-item-group multiple active-class="">
-                                        <v-list-item v-model="creatingLobby.winnerBecomesCzar">
+                                        <v-list-item
+                                            v-model="creatingLobby.winnerBecomesCzar"
+                                            :disabled="$store.state.joinLoading"
+                                        >
                                             <template v-slot:default="{ active }">
                                                 <v-list-item-action>
                                                     <v-checkbox
                                                         :input-value="active"
+                                                        :disabled="$store.state.joinLoading"
                                                         color="primary"
                                                     ></v-checkbox>
                                                 </v-list-item-action>
@@ -226,11 +230,15 @@
                                                 </v-list-item-content>
                                             </template>
                                         </v-list-item>
-                                        <v-list-item v-model="creatingLobby.addJokerCardsToGame">
+                                        <v-list-item
+                                            v-model="creatingLobby.addJokerCardsToGame"
+                                            :disabled="$store.state.joinLoading"
+                                        >
                                             <template v-slot:default="{ active }">
                                                 <v-list-item-action>
                                                     <v-checkbox
                                                         :input-value="active"
+                                                        :disabled="$store.state.joinLoading"
                                                         color="primary"
                                                     ></v-checkbox>
                                                 </v-list-item-action>
