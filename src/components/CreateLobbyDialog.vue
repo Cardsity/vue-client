@@ -202,7 +202,7 @@
                                 </v-row>
                             </v-expansion-panel-content>
                         </v-expansion-panel>
-                        <v-expansion-panel disabled>
+                        <v-expansion-panel>
                             <v-expansion-panel-header>
                                 Special Settings
                             </v-expansion-panel-header>
@@ -419,6 +419,9 @@
                     maxJokerRequests: this.creatingLobby.maxJokerRequests,
 
                     decks: sendDeckIds.map(x => `${x}`),
+
+                    winnerBecomesCzar: this.creatingLobby.winnerBecomesCzar,
+                    jokerCardsToDeck: this.creatingLobby.addJokerCardsToGame,
                 };
                 console.log('Sending', lobbyCreateRequest);
                 webSocket.sendRequest(lobbyCreateRequest).then(response => {

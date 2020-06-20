@@ -17,7 +17,7 @@
                 <v-icon v-else>mdi-arrow-left</v-icon>
             </v-btn>
 
-            <v-menu left bottom>
+            <v-menu transition="scale-transition" origin="top right" left bottom>
                 <template v-slot:activator="{ on }">
                     <v-btn icon v-on="on">
                         <v-icon>mdi-dots-vertical</v-icon>
@@ -67,16 +67,54 @@
                 <a href="https://github.com/orgs/Cardsity/people" target="_blank">Cardsity Team</a>
             </span>
             <v-spacer></v-spacer>
-            <v-btn icon>
-                <v-icon>mdi-alert</v-icon>
-            </v-btn>
-            <v-btn icon @click="$store.state.shareDialog = true">
-                <v-icon>mdi-share-variant</v-icon>
-            </v-btn>
-            <v-btn icon @click="toggleDarkTheme">
-                <v-icon v-if="$vuetify.theme.dark">mdi-toggle-switch</v-icon>
-                <v-icon v-else>mdi-toggle-switch-off</v-icon>
-            </v-btn>
+
+            <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        href="https://github.com/Cardsity/issue-tracker/issues"
+                        target="_blank"
+                    >
+                        <v-icon>mdi-alert</v-icon>
+                    </v-btn>
+                </template>
+                <span>Report bugs</span>
+            </v-tooltip>
+            <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        href="https://discord.gg/g9M2KQj"
+                        target="_blank"
+                    >
+                        <v-icon>mdi-discord</v-icon>
+                    </v-btn>
+                </template>
+                <span>Join our Discord</span>
+            </v-tooltip>
+
+            <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon v-bind="attrs" v-on="on" @click="$store.state.shareDialog = true">
+                        <v-icon>mdi-share-variant</v-icon>
+                    </v-btn>
+                </template>
+                <span>Share</span>
+            </v-tooltip>
+
+            <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon v-bind="attrs" v-on="on" @click="toggleDarkTheme">
+                        <v-icon v-if="$vuetify.theme.dark">mdi-toggle-switch</v-icon>
+                        <v-icon v-else>mdi-toggle-switch-off</v-icon>
+                    </v-btn>
+                </template>
+                <span>Toggle dark theme</span>
+            </v-tooltip>
         </v-footer>
     </v-app>
 </template>

@@ -5,17 +5,23 @@
                 <span class="title font-weight-bold">Share</span>
                 <v-spacer></v-spacer>
                 <v-btn class="mx-0" icon @click="$store.state.shareDialog = false">
-                    <v-icon>mdi-close-circle</v-icon>
+                    <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-card-title>
-            <v-text-field
-                ref="link"
-                label="Click to copy link"
-                class="pa-4"
-                readonly
-                value="https://github.com/Cardsity"
-                @click="copy"
-            ></v-text-field>
+            <v-card-text>
+                <v-text-field
+                    label="GitHub"
+                    readonly
+                    prepend-icon="mdi-github"
+                    value="https://github.com/Cardsity"
+                ></v-text-field>
+                <v-text-field
+                    label="Twitter"
+                    readonly
+                    prepend-icon="mdi-twitter"
+                    value="https://twitter.com/CardsityApp"
+                ></v-text-field>
+            </v-card-text>
         </v-card>
     </v-dialog>
 </template>
@@ -23,14 +29,6 @@
 <script>
     export default {
         name: 'ShareDialog',
-        methods: {
-            copy() {
-                const markup = this.$refs.link;
-                markup.focus();
-                document.execCommand('selectAll', false, null);
-                document.execCommand('copy');
-            },
-        },
     };
 </script>
 

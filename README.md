@@ -8,6 +8,8 @@
 
 This is a Web Client for the Cardsity Server written with [Vue.js](https://vuejs.org/) using the [Vuetify Component Framework](https://vuetifyjs.com)
 
+Report issues [here](https://github.com/Cardsity/issue-tracker/issues)
+
 ## Project setup
 ```
 yarn install
@@ -49,6 +51,7 @@ COPY --from=docker.pkg.github.com/cardsity/vue-client/cardsity-vue-client:latest
 - Remove console logs
 - Avoid scrolling when a chat message gets added
 - Save chat in store
+- Mobile UI (Use https://vuetifyjs.com/en/components/bottom-navigation/#shift ?)
 - Emoji picker in chat
-- Sounds
 - Use Treeshaking (https://vuetifyjs.com/en/customization/a-la-carte/)
+- Change primary accent color to user selected color
