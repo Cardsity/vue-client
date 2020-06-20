@@ -21,6 +21,12 @@
                     prepend-icon="mdi-twitter"
                     value="https://twitter.com/CardsityApp"
                 ></v-text-field>
+                <v-text-field
+                    label="Reddit"
+                    readonly
+                    prepend-icon="mdi-reddit"
+                    value="https://reddit.com/r/Cardsity"
+                ></v-text-field>
             </v-card-text>
         </v-card>
     </v-dialog>
