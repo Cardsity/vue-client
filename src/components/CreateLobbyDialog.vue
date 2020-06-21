@@ -231,7 +231,7 @@
                                             </template>
                                         </v-list-item>
                                         <v-list-item
-                                            v-model="creatingLobby.addJokerCardsToGame"
+                                            v-model="creatingLobby.jokerCardsToDeck"
                                             :disabled="$store.state.joinLoading"
                                         >
                                             <template v-slot:default="{ active }">
@@ -307,7 +307,7 @@
                     maxRounds: 10,
                     maxJokerRequests: 2,
                     winnerBecomesCzar: false,
-                    addJokerCardsToGame: false,
+                    jokerCardsToDeck: false,
                 },
                 settingsAccordionOpened: [0, 1],
                 settingCustomDecks: [],
@@ -429,7 +429,7 @@
                     decks: sendDeckIds.map(x => `${x}`),
 
                     winnerBecomesCzar: this.creatingLobby.winnerBecomesCzar,
-                    jokerCardsToDeck: this.creatingLobby.addJokerCardsToGame,
+                    jokerCardsToDeck: this.creatingLobby.jokerCardsToDeck,
                 };
                 console.log('Sending', lobbyCreateRequest);
                 webSocket.sendRequest(lobbyCreateRequest).then(response => {
@@ -469,6 +469,9 @@
                     maxJokerRequests: this.creatingLobby.maxJokerRequests,
 
                     decks: sendDeckIds.map(x => `${x}`),
+
+                    winnerBecomesCzar: this.creatingLobby.winnerBecomesCzar,
+                    jokerCardsToDeck: this.creatingLobby.jokerCardsToDeck,
                 };
                 console.log('Sending', lobbyEditRequest);
                 webSocket.sendRequest(lobbyEditRequest).then(response => {

@@ -64,7 +64,12 @@
         <v-footer app>
             <span>
                 A Cards Against Humanity clone by
-                <a href="https://github.com/orgs/Cardsity/people" target="_blank">Cardsity Team</a>
+                <a
+                    href="https://github.com/orgs/Cardsity/people"
+                    rel="noopener noreferrer nofollow"
+                    target="_blank"
+                    >Cardsity Team</a
+                >
             </span>
             <v-spacer></v-spacer>
 
@@ -75,6 +80,7 @@
                         v-bind="attrs"
                         v-on="on"
                         href="https://github.com/Cardsity/issue-tracker/issues"
+                        rel="noopener noreferrer nofollow"
                         target="_blank"
                     >
                         <v-icon>mdi-alert</v-icon>
@@ -89,6 +95,7 @@
                         v-bind="attrs"
                         v-on="on"
                         href="https://discord.gg/g9M2KQj"
+                        rel="noopener noreferrer nofollow"
                         target="_blank"
                     >
                         <v-icon>mdi-discord</v-icon>

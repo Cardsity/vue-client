@@ -55,3 +55,4 @@ COPY --from=docker.pkg.github.com/cardsity/vue-client/cardsity-vue-client:latest
 - Emoji picker in chat
 - Use Treeshaking (https://vuetifyjs.com/en/customization/a-la-carte/)
 - Change primary accent color to user selected color
+- Option to enter game and deck server host
