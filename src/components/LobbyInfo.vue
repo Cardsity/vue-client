@@ -121,7 +121,7 @@
             },
             copyQuickJoinLink() {
                 const textArea = document.createElement('textarea');
-                textArea.value = `${document.location.protocol}//${document.location.host}/#/quickJoin/${this.$store.state.currentLobby.id}/${this.$store.state.currentLobby.password}`;
+                textArea.value = `${document.location.protocol}//${document.location.host}/quickJoin/${this.$store.state.currentLobby.id}/${this.$store.state.currentLobby.password}`;
 
                 // Avoid scrolling to bottom
                 textArea.style.top = '0';
