@@ -117,7 +117,7 @@
         box-shadow: 4px 4px 16px 0 rgba(50, 50, 50, 0.85);
     }
 
-    .cah-card:hover {
+    .cah-card:hover:not(.disabled) {
         transform: scale3d(1.1, 1.1, 1.1);
     }
 
