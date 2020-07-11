@@ -11,7 +11,12 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon @click="pressedNavigationButton" v-if="$route.name !== 'Login'">
+            <v-btn
+                icon
+                @click="pressedNavigationButton"
+                v-if="$route.name !== 'Login'"
+                aria-label="Navigation"
+            >
                 <v-icon v-if="$route.name === 'Lobby'">mdi-home</v-icon>
                 <v-icon v-else-if="$route.name === 'Lobby List'">mdi-exit-to-app</v-icon>
                 <v-icon v-else>mdi-arrow-left</v-icon>
@@ -19,7 +24,7 @@
 
             <v-menu transition="scale-transition" origin="top right" left bottom>
                 <template v-slot:activator="{ on }">
-                    <v-btn icon v-on="on">
+                    <v-btn icon v-on="on" aria-label="Menu">
                         <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                 </template>
@@ -54,7 +59,12 @@
                     <v-btn v-bind="attrs" dark text color="green" @click="refreshApp">
                         Refresh
                     </v-btn>
-                    <v-btn icon v-bind="attrs" @click="$store.state.updateAvailable = false">
+                    <v-btn
+                        icon
+                        v-bind="attrs"
+                        @click="$store.state.updateAvailable = false"
+                        aria-label="Close notification"
+                    >
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
                 </template>
@@ -81,6 +91,7 @@
                         v-on="on"
                         href="https://github.com/Cardsity/issue-tracker/issues"
                         rel="noopener noreferrer nofollow"
+                        aria-label="Report bugs"
                         target="_blank"
                     >
                         <v-icon>mdi-alert</v-icon>
@@ -96,6 +107,7 @@
                         v-on="on"
                         href="https://discord.gg/g9M2KQj"
                         rel="noopener noreferrer nofollow"
+                        aria-label="Discord"
                         target="_blank"
                     >
                         <v-icon>mdi-discord</v-icon>
@@ -106,7 +118,13 @@
 
             <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon v-bind="attrs" v-on="on" @click="$store.state.shareDialog = true">
+                    <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        @click="$store.state.shareDialog = true"
+                        aria-label="Share"
+                    >
                         <v-icon>mdi-share-variant</v-icon>
                     </v-btn>
                 </template>
@@ -115,7 +133,13 @@
 
             <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon v-bind="attrs" v-on="on" @click="toggleDarkTheme">
+                    <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        @click="toggleDarkTheme"
+                        aria-label="Toggle dark theme"
+                    >
                         <v-icon v-if="$vuetify.theme.dark">mdi-toggle-switch</v-icon>
                         <v-icon v-else>mdi-toggle-switch-off</v-icon>
                     </v-btn>

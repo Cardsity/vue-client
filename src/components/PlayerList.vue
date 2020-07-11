@@ -51,6 +51,7 @@
                                 v-if="player.owner.id !== $store.state.loggedIn && $store.getters.isHost"
                                 icon
                                 v-on="on"
+                                aria-label="Kick player"
                                 @click="showKickDialog(player)"
                             >
                                 <v-icon>mdi-gavel</v-icon>

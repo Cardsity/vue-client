@@ -4,7 +4,7 @@
             <v-card-title>
                 <span class="title font-weight-bold">Share</span>
                 <v-spacer></v-spacer>
-                <v-btn class="mx-0" icon @click="$store.state.shareDialog = false">
+                <v-btn class="mx-0" icon @click="$store.state.shareDialog = false" aria-label="Close">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-card-title>

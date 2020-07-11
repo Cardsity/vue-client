@@ -8,6 +8,7 @@
                     depressed
                     v-if="$store.getters.isHost"
                     @click="$store.state.createDialog = true"
+                    aria-label="Edit lobby"
                     icon
                 >
                     <v-icon>mdi-pencil</v-icon>

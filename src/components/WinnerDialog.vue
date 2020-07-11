@@ -10,7 +10,13 @@
                 <v-spacer></v-spacer>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon @click="saveAsImage" v-bind="attrs" v-on="on">
+                        <v-btn
+                            icon
+                            @click="saveAsImage"
+                            v-bind="attrs"
+                            v-on="on"
+                            aria-label="Save card history"
+                        >
                             <v-icon>mdi-content-save</v-icon>
                         </v-btn>
                     </template>

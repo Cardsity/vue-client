@@ -1,7 +1,7 @@
 <template>
-    <v-card
-        v-model="card"
+    <div
         class="cah-card elevation-4 mr-2"
+        v-ripple
         :class="{
             'cah-card-black': black,
             'cah-card-white': !black,
@@ -16,12 +16,10 @@
         <img class="cah-card-image" alt="Card logo" src="../assets/card-logo.png" />
         <!-- Only show the number when the selected and blanks is bigger than one (this also prevents showing it on the czar picked cards) -->
         <span class="cah-card-number" v-if="card.selected && blanks > 1">{{ card.selected }}</span>
-    </v-card>
+    </div>
 </template>
 
 <script>
-    import VanillaTilt from 'vanilla-tilt';
-
     export default {
         name: 'Card',
         props: ['card', 'black', 'disabled', 'blanks', 'spaceRight'],
@@ -40,7 +38,7 @@
                         const playedCardsCount = selectedPlayerCards.length;
                         const allCardSelected = playedCardsCount >= this.blanks;
 
-                        // we need to add one when a new card get's selected, otherwise the highest card get's updated
+                        // we need to add one when a new card gets selected, otherwise the highest card gets updated
                         const index =
                             (highestSelectedCard ? highestSelectedCard.selected : 0) +
                             (allCardSelected ? 0 : 1);
@@ -94,22 +92,6 @@
                 }
             },
         },
-        mounted() {
-            VanillaTilt.init(this.$el, {
-                glare: true,
-                scale: 1.1,
-                'max-glare': 0.25,
-                gyroscope: false,
-                max: 0,
-            });
-        },
-        beforeDestroy() {
-            if (this.$el.vanillaTilt) {
-                this.$el.vanillaTilt.destroy();
-            } else {
-                console.warn('VanillaTilt was not registered on Card component with card', this.card);
-            }
-        },
     };
 </script>
 
@@ -121,7 +103,7 @@
         padding-right: 1rem;
 
         border: 1px solid black;
-        border-radius: 5px;
+        border-radius: 0.5rem;
         font-family: 'Roboto', sans-serif;
         font-weight: bold;
         margin-bottom: 0.75rem;
@@ -129,6 +111,14 @@
         -moz-user-select: none;
         user-select: none;
         cursor: pointer;
+        transition: 0.2s;
+        -webkit-box-shadow: 4px 4px 16px 0 rgba(50, 50, 50, 0.85);
+        -moz-box-shadow: 4px 4px 16px 0 rgba(50, 50, 50, 0.85);
+        box-shadow: 4px 4px 16px 0 rgba(50, 50, 50, 0.85);
+    }
+
+    .cah-card:hover {
+        transform: scale3d(1.1, 1.1, 1.1);
     }
 
     .cah-card.disabled {

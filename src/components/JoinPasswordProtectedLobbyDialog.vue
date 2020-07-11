@@ -6,7 +6,7 @@
                     <v-icon color="red">mdi-lock-question</v-icon> This lobby is password protected!
                 </span>
                 <v-spacer></v-spacer>
-                <v-btn icon @click="$store.state.passwordDialog = false">
+                <v-btn icon @click="$store.state.passwordDialog = false" aria-label="Close">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-card-title>

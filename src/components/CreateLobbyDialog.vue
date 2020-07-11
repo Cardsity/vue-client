@@ -12,7 +12,7 @@
                         Create Lobby
                     </span>
                     <v-spacer></v-spacer>
-                    <v-btn icon @click="$store.state.createDialog = false">
+                    <v-btn icon @click="$store.state.createDialog = false" aria-label="Close">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
                 </v-card-title>
