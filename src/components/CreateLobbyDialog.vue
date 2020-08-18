@@ -33,6 +33,7 @@
                                     :disabled="$store.state.joinLoading || !!lobby"
                                     label="Name"
                                     v-model="creatingLobby.name"
+                                    autocomplete="off"
                                     required
                                     dense
                                     outlined
@@ -45,6 +46,7 @@
                                     dense
                                     label="Password (optional)"
                                     type="password"
+                                    autocomplete="new-password"
                                     outlined
                                     clearable
                                     append-icon="mdi-lock"
