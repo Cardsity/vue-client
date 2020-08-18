@@ -41,7 +41,7 @@
                             {{ winner.owner.name }}
                         </v-list-item-title>
                         <v-list-item-subtitle>
-                            {{ winner.points + ' Points' }}
+                            {{ winner.points + (winner.points === 1 ? ' Point' : ' Points') }}
                         </v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
@@ -62,7 +62,7 @@
                                 </v-icon>
                             </v-list-item-title>
                             <v-list-item-subtitle>
-                                {{ player.points + ' Points' }}
+                                {{ player.points + (player.points === 1 ? ' Point' : ' Points') }}
                             </v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>

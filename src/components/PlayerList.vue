@@ -35,9 +35,9 @@
                 <v-list-item-title :style="`color: ${player.owner.color};`">
                     <v-icon :color="player.owner.color">mdi-account-circle</v-icon>
                     {{ player.owner.name }}
-                    <v-chip v-if="$store.getters.inGame" color="secondary" class="mr-1"
-                        >{{ player.points }} Points</v-chip
-                    >
+                    <v-chip v-if="$store.getters.inGame" color="secondary" class="mr-1">
+                      {{ player.points + (player.points === 1 ? ' Point' : ' Points') }}
+                    </v-chip>
                     <v-chip
                         color="primary"
                         v-if="$store.getters.inGame && player.owner.id === lobby.czar.owner.id"
@@ -67,7 +67,6 @@
 
 <script>
     export default {
-        // TODO: crown on the best player
         name: 'PlayerList',
         props: ['lobby'],
         data() {
