@@ -4,9 +4,7 @@
             <v-toolbar color="primary" dark flat>
                 <v-icon>mdi-trophy</v-icon>
                 <v-spacer></v-spacer>
-                <v-card-title>
-                    Game ended!
-                </v-card-title>
+                <v-card-title> Game ended! </v-card-title>
                 <v-spacer></v-spacer>
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -27,14 +25,10 @@
                 </v-btn>
             </v-toolbar>
             <v-card-text>
-                <v-card-title>
-                    We have a winner
-                </v-card-title>
+                <v-card-title> We have a winner </v-card-title>
                 <v-list-item>
                     <v-list-item-icon>
-                        <v-icon :color="winner.owner.color">
-                            mdi-account-circle
-                        </v-icon>
+                        <v-icon :color="winner.owner.color"> mdi-account-circle </v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
                         <v-list-item-title>
@@ -50,9 +44,7 @@
                 <v-list>
                     <v-list-item v-for="(player, index) in sortedPlayers" :key="index">
                         <v-list-item-icon>
-                            <v-icon :color="player.owner.color">
-                                mdi-account-circle
-                            </v-icon>
+                            <v-icon :color="player.owner.color"> mdi-account-circle </v-icon>
                         </v-list-item-icon>
                         <v-list-item-content>
                             <v-list-item-title>

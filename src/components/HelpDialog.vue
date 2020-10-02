@@ -65,9 +65,7 @@
                     </v-expansion-panel>
 
                     <v-expansion-panel>
-                        <v-expansion-panel-header>
-                            Source
-                        </v-expansion-panel-header>
+                        <v-expansion-panel-header> Source </v-expansion-panel-header>
                         <v-expansion-panel-content>
                             <a
                                 href="https://en.wikipedia.org/wiki/Cards_Against_Humanity#Gameplay"

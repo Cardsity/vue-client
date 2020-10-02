@@ -121,6 +121,7 @@
                             this.$store.state.sentCards = false;
                             this.$store.state.cards = [];
                         }
+                        this.$store.state.czarPicked = null;
                         this.$store.state.jokerRequestsRemaining = jokerRequestsRemaining;
 
                         if (playCardDrawSound) {
@@ -149,6 +150,7 @@
                     if (winnerId) {
                         this.$store.state.czarPicked = winnerId;
                         this.$store.dispatch('selectWonCards', winnerId);
+                        // TODO: server should send which cards are from which player so we can display it
                         if (winnerId === this.$store.state.loggedIn) {
                             const pointScoredSound = document.getElementById('pointScoredSound');
                             pointScoredSound.currentTime = 0;

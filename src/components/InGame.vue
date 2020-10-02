@@ -3,15 +3,15 @@
         <audio id="clockSound" loop>
             <source src="../assets/sounds/clock.wav" type="audio/wav" />
         </audio>
-        <v-row no-gutters align="start" justify="start" class="ml-3 mt-3" style="position: relative;">
+        <v-row no-gutters align="start" justify="start" class="ml-3 mt-3" style="position: relative">
             <!-- Black card -->
             <Card :black="true" :card="lobby.blackCard" :disabled="true"></Card>
             <v-divider vertical class="ml-1"></v-divider>
             <v-spacer></v-spacer>
             <!-- Played cards -->
             <Card
-                :disabled="!$store.getters.isCzar || !playedCard.text || $store.state.czarPicked"
                 v-for="(playedCard, index) in $store.state.cards"
+                :disabled="!$store.getters.isCzar || !playedCard.text || $store.state.czarPicked"
                 :space-right="lobby.blackCard.blanks > 1 && (index + 1) % lobby.blackCard.blanks === 0"
                 :key="index"
                 :card="playedCard"
@@ -23,7 +23,7 @@
                     v-if="lobby.blackCard.blanks > 1 && index % lobby.blackCard.blanks !== 0"
             ></v-divider>-->
             <v-spacer></v-spacer>
-            <div class="mr-2" style="height: inherit;">
+            <div class="mr-2" style="height: inherit">
                 <v-progress-circular
                     :value="(lobby.currentRound / lobby.maxRounds) * 100"
                     size="50"
@@ -37,12 +37,11 @@
                 </v-progress-circular>
             </div>
             <v-btn
-                style="position: absolute; bottom: 0; right: 0; margin: 0.5rem;"
+                style="position: absolute; bottom: 0; right: 0; margin: 0.5rem"
                 @click="submitCards"
                 :disabled="
                     $store.state.sentCards ||
-                    $store.getters.selectedPlayerCards.length <
-                        $store.state.currentLobby.blackCard.blanks
+                    $store.getters.selectedPlayerCards.length < lobby.blackCard.blanks
                 "
             >
                 <v-icon>mdi-send</v-icon>
@@ -58,7 +57,7 @@
             <v-divider vertical></v-divider>
 
             <!-- Player's hand -->
-            <v-col style="position: relative;">
+            <v-col style="position: relative">
                 <div class="czar-overlay" v-if="$store.getters.isCzar">
                     You are the Card Czar this round!
                 </div>
@@ -171,8 +170,7 @@
                 this.timerInterval = window.setInterval(() => {
                     if (this.$store.state.timer > 0) {
                         this.$store.state.timer -= 1000;
-                        this.timerPercent =
-                            (this.$store.state.timer / this.$store.state.currentLobby.pickLimit) * 100;
+                        this.timerPercent = (this.$store.state.timer / this.lobby.pickLimit) * 100;
                         const clockTimer = 10000;
                         if (
                             this.$store.state.timer <= clockTimer &&
@@ -182,7 +180,12 @@
                             clockSound.currentTime = 0;
                             clockSound.volume = 0.08;
                             clockSound.play();
-                        } else if (this.$store.state.timer > clockTimer && !clockSound.paused) {
+                        }
+                        // When the time is up or the czar picked a card TODO: when a card was picked for you
+                        else if (
+                            (this.$store.state.timer > clockTimer || this.$store.state.czarPicked) &&
+                            !clockSound.paused
+                        ) {
                             clockSound.pause();
                         }
                     }
@@ -253,12 +256,13 @@
 </script>
 
 <style lang="scss">
+    /* We need this to fix the circle lacking behind because we're updating it very frequently */
     .v-progress-circular__overlay {
         transition: none !important;
     }
 </style>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
     .cards-view {
         position: relative;
     }

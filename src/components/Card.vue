@@ -95,7 +95,7 @@
     };
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
     .cah-card {
         position: relative;
         width: 10rem;

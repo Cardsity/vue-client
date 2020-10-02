@@ -1,26 +1,24 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
 
 jobs:
+    build:
+        runs-on: ubuntu-latest
 
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2.3.1
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v1.1.0
-        with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          repository: cardsity/vue-client/cardsity-vue-client
-          tags: latest
-          tag_with_ref: true
+        steps:
+            - name: Check out the repo
+              uses: actions/checkout@v2.3.1
+            - name: Build and push Docker images
+              uses: docker/build-push-action@v1.1.0
+              with:
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+                  registry: docker.pkg.github.com
+                  repository: cardsity/vue-client/cardsity-vue-client
+                  tags: latest
+                  tag_with_ref: true

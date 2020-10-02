@@ -15,13 +15,13 @@
                     {{ item.sender.name }}
                 </div>
 
-                <div style="margin-top: 5px;"></div>
+                <div style="margin-top: 5px"></div>
 
                 <v-card
                     outlined
                     class="content"
                     :color="item.sender.color"
-                    style="background-color: unset !important;"
+                    style="background-color: unset !important"
                 >
                     <div v-text="item.message"></div>
                 </v-card>
@@ -79,6 +79,7 @@
                                     container: chatBox,
                                 });
                             }
+                            // TODO: this focuses the chat even if it should not. maybe only do it if it was focussed before
                             this.$el.querySelector('#chat-input-field').focus();
                         });
                     }

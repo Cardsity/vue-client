@@ -6,9 +6,7 @@
                     <v-icon>mdi-information</v-icon>
                     <span>Cardsity</span>
                     <br />
-                    <span class="text-h6">
-                        Vue client, version 0.1
-                    </span>
+                    <span class="text-h6"> Vue client, version 0.1 </span>
                 </div>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="$store.state.aboutDialog = false" aria-label="Close">

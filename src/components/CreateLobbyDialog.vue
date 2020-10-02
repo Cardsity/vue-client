@@ -25,9 +25,7 @@
                         hover
                     >
                         <v-expansion-panel>
-                            <v-expansion-panel-header>
-                                General Settings
-                            </v-expansion-panel-header>
+                            <v-expansion-panel-header> General Settings </v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <v-text-field
                                     :disabled="$store.state.joinLoading || !!lobby"
@@ -73,9 +71,7 @@
                             </v-expansion-panel-content>
                         </v-expansion-panel>
                         <v-expansion-panel>
-                            <v-expansion-panel-header>
-                                Deck Settings
-                            </v-expansion-panel-header>
+                            <v-expansion-panel-header> Deck Settings </v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <span><v-icon>mdi-check-decagram</v-icon> Official decks</span>
                                 <v-chip-group
@@ -119,9 +115,7 @@
                             </v-expansion-panel-content>
                         </v-expansion-panel>
                         <v-expansion-panel>
-                            <v-expansion-panel-header>
-                                Game Settings
-                            </v-expansion-panel-header>
+                            <v-expansion-panel-header> Game Settings </v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <v-row>
                                     <v-col>
@@ -205,9 +199,7 @@
                             </v-expansion-panel-content>
                         </v-expansion-panel>
                         <v-expansion-panel>
-                            <v-expansion-panel-header>
-                                Special Settings
-                            </v-expansion-panel-header>
+                            <v-expansion-panel-header> Special Settings </v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <v-list two-line subheader flat>
                                     <v-list-item-group multiple active-class="">
@@ -327,6 +319,7 @@
                 Object.assign(this.creatingLobby, this.lobby);
                 // Lobby object from server has pick limit in ms
                 this.creatingLobby.pickLimit /= 1000 * 60;
+                // TODO: special settings are not checked in edit dialog?
             }
 
             try {
@@ -361,7 +354,6 @@
                     });
                 }
             } catch (e) {
-                // TODO: show error when it failed
                 console.error(e);
                 this.$toasted.show(e, {
                     icon: 'mdi-alert-circle',
@@ -439,8 +431,7 @@
                     console.log('Create lobby response message received', response);
 
                     if (response.success) {
-                        const createdLobby = response;
-                        this.$store.commit('setCurrentLobby', createdLobby);
+                        this.$store.commit('setCurrentLobby', response);
                         this.$store.state.createDialog = false;
                         this.$router.push(`/lobby`);
                     } else {
