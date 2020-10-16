@@ -2445,7 +2445,7 @@ check-types@^8.0.3:
   resolved "https://registry.yarnpkg.com/check-types/-/check-types-8.0.3.tgz#3356cca19c889544f2d7a95ed49ce508a0ecf552"
   integrity sha512-YpeKZngUmG65rLudJ4taU7VLkOCTMhNl/u4ctNC56LQS/zJTyNH0Lrtwm1tfTsbLlwvlfsA2d1c8vCf/Kh2KwQ==
 
-chnl@^1.0.0:
+chnl@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/chnl/-/chnl-1.2.0.tgz#d818c95367767a0880508e7cc0b5b3503f58fd4c"
   integrity sha512-g5gJb59edwCliFbX2j7G6sBfY4sX9YLy211yctONI2GRaiX0f2zIbKWmBm+sPqFNEpM7Ljzm7IJX/xrjiEbPrw==
@@ -7111,7 +7111,7 @@ promise-inflight@^1.0.1:
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
 
-promise.prototype.finally@^3.1.1:
+promise.prototype.finally@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/promise.prototype.finally/-/promise.prototype.finally-3.1.2.tgz#b8af89160c9c673cefe3b4c4435b53cfd0287067"
   integrity sha512-A2HuJWl2opDH0EafgdjwEw7HysI8ff/n4lW4QEVBCUXFk9QeGecBWv0Deph0UmLe3tTNYegz8MOjsVuE6SMoJA==
@@ -9132,14 +9132,14 @@ webpack@^4.0.0:
     watchpack "^1.7.4"
     webpack-sources "^1.4.1"
 
-websocket-as-promised@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/websocket-as-promised/-/websocket-as-promised-1.0.1.tgz#fee264ef4b3e8db347add85c5ca5696838777ccc"
-  integrity sha512-+gBevna4yxisb8cigL8NxcS8s241cvfMeyy1fNFcFgBcX/6vknMT84MwMmBNLYmsYH2giVoxOSEiAeeb7txFOw==
+websocket-as-promised@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/websocket-as-promised/-/websocket-as-promised-1.1.0.tgz#3f5666645a5efdb3a6d89d53eb2f925649a70c32"
+  integrity sha512-agq8bPsPFKBWinKQkoXwY7LoBYe+2fQ7Gnuxx964+BTIiyAdL130FnB60bXuVQdUCdaS17R/MyRaaO4WIqtl4Q==
   dependencies:
-    chnl "^1.0.0"
+    chnl "^1.2.0"
     promise-controller "^1.0.0"
-    promise.prototype.finally "^3.1.1"
+    promise.prototype.finally "^3.1.2"
 
 websocket-driver@0.6.5:
   version "0.6.5"
