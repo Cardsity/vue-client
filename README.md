@@ -46,6 +46,7 @@ COPY --from=docker.pkg.github.com/cardsity/vue-client/cardsity-vue-client:latest
 - Option to preview the black cards filled with the text of the selected white cards
 - Write Tests
 - Cards with long text
+- Rewrite in TypeScript (+ Vue 3?)
 - Validate forms better
 - Focus text fields in dialogs
 - Remove console logs
