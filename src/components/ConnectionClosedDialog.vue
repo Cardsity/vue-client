@@ -1,11 +1,9 @@
 <template>
-    <!--<v-dialog v-model="$store.state.connectionClosed" persistent class="error" max-width="500">
+    <v-dialog v-model="$store.state.connectionClosed" persistent class="error" max-width="500">
         <v-card :loading="$store.state.reconnecting">
             <v-card-title>Connection closed!</v-card-title>
             <v-card-text>
-                <p class="error&#45;&#45;text">
-                    We are sorry. This shouldn't have happened.
-                </p>
+                <p class="error--text">We are sorry. This shouldn't have happened.</p>
                 <p>
                     The connection to the server was closed. You can check if we have server problems
                     <a href="https://twitter.com/CardsityApp" target="_blank">here</a>
@@ -19,8 +17,7 @@
                 </v-btn>
             </v-card-actions>
         </v-card>
-    </v-dialog>-->
-    <div></div>
+    </v-dialog>
 </template>
 
 <script>
