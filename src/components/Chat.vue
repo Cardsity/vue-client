@@ -78,6 +78,8 @@
                                     duration: 500,
                                     container: chatBox,
                                 });
+                            } else {
+                                // TODO: add indicator that there are new messages
                             }
                             // TODO: this focuses the chat even if it should not. maybe only do it if it was focussed before
                             this.$el.querySelector('#chat-input-field').focus();
@@ -105,7 +107,6 @@
                     console.log('Chat response message received', response);
 
                     if (response.success) {
-                        this.userSaved = true;
                         console.log('sent chat message', this.chatMessage);
                         this.chatMessage = '';
                     } else {

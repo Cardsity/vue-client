@@ -89,7 +89,6 @@
                 '#9E9E9E',
             ].map(x => [x]),
             color: '#F44336',
-            userSaved: false,
             sending: false,
         }),
         mounted() {
@@ -120,8 +119,6 @@
                     console.log('Login response message received', response);
 
                     if (response.success) {
-                        this.userSaved = true;
-
                         this.$toasted.show(response.message, {
                             icon: 'account_box',
                             duration: 5000,

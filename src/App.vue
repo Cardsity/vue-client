@@ -155,6 +155,7 @@
     import LobbyLeaveDialog from './components/LobbyLeaveDialog';
     import HelpDialog from './components/HelpDialog';
 
+    // TODO: add noopener to all external links
     export default {
         name: 'App',
         components: {
