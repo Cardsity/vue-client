@@ -1,0 +1,74 @@
+{
+    "@mdi/font": {
+        "licenses": "Apache-2.0",
+        "repository": "https://github.com/Templarian/MaterialDesign-Webfont",
+        "licenseUrl": "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/LICENSE",
+        "parents": "cardsity-vue-client"
+    },
+    "@trainiac/html2canvas": {
+        "licenses": "MIT",
+        "repository": "https://github.com/niklasvh/html2canvas",
+        "licenseUrl": "https://github.com/niklasvh/html2canvas/raw/master/LICENSE",
+        "parents": "cardsity-vue-client"
+    },
+    "core-js": {
+        "licenses": "MIT",
+        "repository": "https://github.com/zloirock/core-js",
+        "licenseUrl": "https://github.com/zloirock/core-js/raw/master/LICENSE",
+        "parents": "cardsity-vue-client"
+    },
+    "register-service-worker": {
+        "licenses": "MIT",
+        "repository": "https://github.com/yyx990803/register-service-worker",
+        "licenseUrl": "https://github.com/yyx990803/register-service-worker/raw/master/LICENSE",
+        "parents": "cardsity-vue-client"
+    },
+    "roboto-fontface": {
+        "licenses": "Apache-2.0",
+        "repository": "https://github.com/choffmeister/roboto-fontface-bower",
+        "licenseUrl": "https://github.com/choffmeister/roboto-fontface-bower/raw/master/LICENSE",
+        "parents": "cardsity-vue-client"
+    },
+    "vue-router": {
+        "licenses": "MIT",
+        "repository": "https://github.com/vuejs/vue-router",
+        "licenseUrl": "https://github.com/vuejs/vue-router/raw/master/LICENSE",
+        "parents": "cardsity-vue-client"
+    },
+    "vue-toasted": {
+        "licenses": "MIT",
+        "repository": "https://github.com/shakee93/vue-toasted",
+        "licenseUrl": "https://github.com/shakee93/vue-toasted/raw/master/LICENSE",
+        "parents": "cardsity-vue-client"
+    },
+    "vue": {
+        "licenses": "MIT",
+        "repository": "https://github.com/vuejs/vue",
+        "licenseUrl": "https://github.com/vuejs/vue/raw/master/LICENSE",
+        "parents": "cardsity-vue-client"
+    },
+    "vuelidate": {
+        "licenses": "MIT",
+        "repository": "https://github.com/monterail/vuelidate",
+        "licenseUrl": "https://github.com/monterail/vuelidate/raw/master/LICENSE",
+        "parents": "cardsity-vue-client"
+    },
+    "vuetify": {
+        "licenses": "MIT",
+        "repository": "https://github.com/vuetifyjs/vuetify",
+        "licenseUrl": "https://github.com/vuetifyjs/vuetify/raw/master/LICENSE.md",
+        "parents": "cardsity-vue-client"
+    },
+    "vuex": {
+        "licenses": "MIT",
+        "repository": "https://github.com/vuejs/vuex",
+        "licenseUrl": "https://github.com/vuejs/vuex/raw/master/LICENSE",
+        "parents": "cardsity-vue-client"
+    },
+    "websocket-as-promised": {
+        "licenses": "MIT",
+        "repository": "https://github.com/vitalets/websocket-as-promised",
+        "licenseUrl": "https://github.com/vitalets/websocket-as-promised/raw/master/LICENSE",
+        "parents": "cardsity-vue-client"
+    }
+}
