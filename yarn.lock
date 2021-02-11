@@ -6795,6 +6795,11 @@ promise.prototype.finally@^3.1.2:
     es-abstract "^1.17.0-next.0"
     function-bind "^1.1.1"
 
+promised-map@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/promised-map/-/promised-map-1.0.0.tgz#aa3ec59e13724d37b946415f6850273af8e213b5"
+  integrity sha512-fP9VSMgcml+U2uJ9PBc4/LDQ3ZkJCH4blLNCS6gbH7RHyRZCYs91zxWHqiUy+heFiEMiB2op/qllYoFqmIqdWA==
+
 proxy-addr@~2.0.5:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.6.tgz#fdc2336505447d3f2f2c638ed272caf614bbb2bf"
@@ -8694,14 +8699,15 @@ webpack@^4.0.0:
     watchpack "^1.7.4"
     webpack-sources "^1.4.1"
 
-websocket-as-promised@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/websocket-as-promised/-/websocket-as-promised-1.1.0.tgz#3f5666645a5efdb3a6d89d53eb2f925649a70c32"
-  integrity sha512-agq8bPsPFKBWinKQkoXwY7LoBYe+2fQ7Gnuxx964+BTIiyAdL130FnB60bXuVQdUCdaS17R/MyRaaO4WIqtl4Q==
+websocket-as-promised@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/websocket-as-promised/-/websocket-as-promised-2.0.1.tgz#d18b7c160bba294585aaf6fa9572f31e05cfb175"
+  integrity sha512-ePV26D/D37ughXU9j+DjGmwUbelWJrC/vi+6GK++fRlBJmS7aU9T8ABu47KFF0O7r6XN2NAuqJRpegbUwXZxQg==
   dependencies:
     chnl "^1.2.0"
     promise-controller "^1.0.0"
     promise.prototype.finally "^3.1.2"
+    promised-map "^1.0.0"
 
 websocket-driver@0.6.5:
   version "0.6.5"

@@ -24,7 +24,7 @@
         "vuelidate": "^0.7.6",
         "vuetify": "^2.4.3",
         "vuex": "^3.6.0",
-        "websocket-as-promised": "^1.1.0"
+        "websocket-as-promised": "^2.0.1"
     },
     "devDependencies": {
         "@mdi/font": "^5.9.55",
